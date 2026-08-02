@@ -20,19 +20,18 @@ GitHub issues and pull requests remain the delivery records.
 | PR #13: end-to-end decision packet | Merged Layers 1–4 | Human review of the first cross-cutting dry-run packet |
 | PR #17: public north-star vision | Merged evidence and truthful claim audit | Human/independent scope review of the governing specification |
 | PR #19 / issue #18: branch continuity core | Merged Layers 1–4; stacked only for the PR #17 document | Read-only child branches, explicit promotion, immutable plan versions |
+| Issue #20 review branch: typed semantic confidence | Layer 2; stacked on Stage 1A for linear review | Confidence evidence, hedged-action fallback, historical replay compatibility |
 | PR #14: disabled Krish contract proposal | PR #13 | Contract review only; no integration authority |
 
 ## Next
 
 1. Merge or revise the Stage 1A branch core after review.
-2. Add typed semantic confidence; uncertain extraction must remain exploration
-   and cannot self-confirm.
-3. Define and test local retention, redaction, export, and archived-branch search
+2. Define and test local retention, redaction, export, and archived-branch search
    after the human selects those privacy defaults.
-4. Connect branch-aware accepted-plan versions to the decision packet after PR
+3. Connect branch-aware accepted-plan versions to the decision packet after PR
    #13's interface is accepted. This must preserve the separate gate rather than
    importing its unreviewed code here.
-5. Begin the opt-in multi-project intent field only after its reasoning scope is
+4. Begin the opt-in multi-project intent field only after its reasoning scope is
    explicitly chosen.
 
 ## Deferred or rejected

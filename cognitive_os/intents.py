@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass, replace
+from dataclasses import asdict, dataclass, field, replace
 from enum import Enum
 import re
 from typing import Any, Dict, Iterable, List
@@ -30,6 +30,61 @@ class ConfirmationAuthority(str, Enum):
     SYSTEM = "system"
 
 
+class ConfidenceBand(str, Enum):
+    UNASSESSED = "unassessed"
+    LOW = "low"
+    MEDIUM = "medium"
+    HIGH = "high"
+
+
+@dataclass(frozen=True)
+class SemanticConfidence:
+    """Deterministic interpretation evidence; never an authority signal."""
+
+    band: ConfidenceBand
+    score_millis: int
+    signals: tuple[str, ...]
+
+    def __post_init__(self) -> None:
+        if not 0 <= self.score_millis <= 1000:
+            raise ValueError("confidence score_millis must be between 0 and 1000")
+        if tuple(sorted(set(self.signals))) != self.signals:
+            raise ValueError("confidence signals must be unique and sorted")
+        if any(not signal.strip() for signal in self.signals):
+            raise ValueError("confidence signals must be non-empty")
+        valid_range = {
+            ConfidenceBand.UNASSESSED: self.score_millis == 0 and not self.signals,
+            ConfidenceBand.LOW: self.score_millis < 400 and bool(self.signals),
+            ConfidenceBand.MEDIUM: 400 <= self.score_millis < 800 and bool(self.signals),
+            ConfidenceBand.HIGH: 800 <= self.score_millis <= 1000 and bool(self.signals),
+        }
+        if not valid_range[self.band]:
+            raise ValueError("confidence band does not match score or signals")
+
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            "band": self.band.value,
+            "score_millis": self.score_millis,
+            "signals": list(self.signals),
+        }
+
+    @classmethod
+    def from_dict(cls, value: Dict[str, Any]) -> "SemanticConfidence":
+        return cls(
+            band=ConfidenceBand(value["band"]),
+            score_millis=int(value["score_millis"]),
+            signals=tuple(value["signals"]),
+        )
+
+    @classmethod
+    def unassessed(cls) -> "SemanticConfidence":
+        return cls(
+            band=ConfidenceBand.UNASSESSED,
+            score_millis=0,
+            signals=(),
+        )
+
+
 @dataclass(frozen=True)
 class ConfirmationRecord:
     actor_id: str
@@ -55,11 +110,15 @@ class IntentAtom:
     state: AtomState
     requires_human_confirmation: bool
     extraction_method: str = "rules_v1"
+    semantic_confidence: SemanticConfidence = field(
+        default_factory=SemanticConfidence.unassessed
+    )
 
     def to_dict(self) -> Dict[str, Any]:
         value = asdict(self)
         value["kind"] = self.kind.value
         value["state"] = self.state.value
+        value["semantic_confidence"] = self.semantic_confidence.to_dict()
         return value
 
     @classmethod
@@ -74,6 +133,11 @@ class IntentAtom:
             state=AtomState(value["state"]),
             requires_human_confirmation=bool(value["requires_human_confirmation"]),
             extraction_method=value.get("extraction_method", "rules_v1"),
+            semantic_confidence=(
+                SemanticConfidence.from_dict(value["semantic_confidence"])
+                if "semantic_confidence" in value
+                else SemanticConfidence.unassessed()
+            ),
         )
 
 
@@ -110,7 +174,7 @@ class IntentExtractor:
                 continue
             start = match.start() + leading
             end = match.start() + trailing
-            kind = self._classify(statement)
+            kind, confidence = self._classify(statement)
             confirmation = kind in (AtomKind.ACTIONABLE, AtomKind.DECISION_REQUEST)
             atoms.append(
                 IntentAtom(
@@ -126,20 +190,47 @@ class IntentExtractor:
                         else AtomState.PROPOSED
                     ),
                     requires_human_confirmation=confirmation,
+                    extraction_method="rules_v2_confidence",
+                    semantic_confidence=confidence,
                 )
             )
         return atoms
 
-    def _classify(self, statement: str) -> AtomKind:
-        if self._constraint.search(statement):
-            return AtomKind.CONSTRAINT
-        if self._decision.search(statement):
-            return AtomKind.DECISION_REQUEST
-        if self._exploration.search(statement):
-            return AtomKind.EXPLORATION
-        if self._action.search(statement):
-            return AtomKind.ACTIONABLE
-        return AtomKind.EXPLORATION
+    def _classify(self, statement: str) -> tuple[AtomKind, SemanticConfidence]:
+        matches = {
+            "action_signal": bool(self._action.search(statement)),
+            "constraint_signal": bool(self._constraint.search(statement)),
+            "decision_signal": bool(self._decision.search(statement)),
+            "exploration_signal": bool(self._exploration.search(statement)),
+        }
+        signals = tuple(sorted(name for name, matched in matches.items() if matched))
+        if matches["constraint_signal"]:
+            if matches["exploration_signal"] or matches["decision_signal"]:
+                return AtomKind.CONSTRAINT, SemanticConfidence(
+                    ConfidenceBand.MEDIUM, 650, signals
+                )
+            return AtomKind.CONSTRAINT, SemanticConfidence(
+                ConfidenceBand.HIGH, 950, signals
+            )
+        if matches["exploration_signal"]:
+            if matches["action_signal"] or matches["decision_signal"]:
+                return AtomKind.EXPLORATION, SemanticConfidence(
+                    ConfidenceBand.MEDIUM, 500, signals
+                )
+            return AtomKind.EXPLORATION, SemanticConfidence(
+                ConfidenceBand.HIGH, 900, signals
+            )
+        if matches["decision_signal"]:
+            return AtomKind.DECISION_REQUEST, SemanticConfidence(
+                ConfidenceBand.HIGH, 900, signals
+            )
+        if matches["action_signal"]:
+            return AtomKind.ACTIONABLE, SemanticConfidence(
+                ConfidenceBand.HIGH, 900, signals
+            )
+        return AtomKind.EXPLORATION, SemanticConfidence(
+            ConfidenceBand.LOW, 200, ("no_decisive_signal",)
+        )
 
 
 class IntentLifecycle:
@@ -186,7 +277,7 @@ class IntentLifecycle:
             raise IntentLifecycleError(
                 "atom %s is not awaiting confirmation" % atom_id
             )
-        event = self.store.append(
+        self.store.append(
             atom_id,
             "atom.confirmed",
             confirmation.to_dict(),

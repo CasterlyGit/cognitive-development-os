@@ -14,6 +14,7 @@ and cannot merge or deploy anything.
 ```bash
 python3 -m unittest discover -v
 python3 -m examples.stage1a_intent_continuity_demo
+python3 -m examples.stage1b_semantic_confidence_demo
 ```
 
 Implementation proceeds as independently reviewable layers. Reports and proof
@@ -34,6 +35,10 @@ review branch adds local cognitive branches and immutable accepted-plan versions
 children are read-only, and only explicit human promotion can create a
 superseding parent version. None of these artifacts authorize writes to other
 repositories or services.
+
+The Stage 1B review branch adds typed, deterministic semantic-confidence
+metadata. Hedged action falls back to exploration, historical atoms replay as
+explicitly unassessed, and confidence never confirms intent or grants authority.
 
 ## License
 
