@@ -12,6 +12,7 @@ may supersede one while preserving its provenance.
 | [0004](0004-public-lineage-export-boundary.md) | accepted | Export structural lineage through scoped references without raw-source fields |
 | [0005](0005-continuity-stream-revision.md) | accepted | Bind continuity validation to an atomic stream-local append revision |
 | [0006](0006-private-data-and-reasoning-scope-defaults.md) | accepted | Default to session-only raw data, exact archived scope, reversible deletion planning, and single-project reasoning |
+| [0007](0007-session-private-content-and-structural-lineage.md) | accepted | Keep v2 private content in a process-local session vault while immutable events retain strict structural lineage |
 
 ## Record template
 

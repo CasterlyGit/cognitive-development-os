@@ -19,15 +19,16 @@ This page remains the compact index of live GitHub delivery state.
 - [#20 — Typed semantic confidence](https://github.com/CasterlyGit/cognitive-development-os/issues/20)
 - [#22 — Redacted structural lineage export](https://github.com/CasterlyGit/cognitive-development-os/issues/22)
 - [#24 — Atomic continuity stream revisions](https://github.com/CasterlyGit/cognitive-development-os/issues/24)
+- [#26 — Conservative private-data and reasoning-scope defaults](https://github.com/CasterlyGit/cognitive-development-os/issues/26)
 
 ## Open review gates
 
-1. [#26 — Conservative private-data and reasoning-scope defaults](https://github.com/CasterlyGit/cognitive-development-os/issues/26), policy and audit only; no deletion
+1. [#30 — Session-private content and structural lineage](https://github.com/CasterlyGit/cognitive-development-os/issues/30), v2 path only; no legacy migration or deletion
 
 ## Next execution path
 
-1. Separate private content from immutable structural lineage so session-only and
-   expiring retention can be enforced without rewriting accepted history.
+1. Review the v2 private-content boundary without treating it as legacy
+   migration, secure erasure, or persistent retention.
 2. Connect accepted continuity plan versions to the verified decision packet
    without enabling execution.
 3. Add the opt-in, project-scoped intent field with evidence-backed relationship

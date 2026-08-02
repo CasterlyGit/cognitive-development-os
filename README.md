@@ -34,7 +34,8 @@ contract](docs/implementation/LAYER_6_KRISH_PROPOSAL.md), and the Stage 1
 [continuity](docs/implementation/STAGE_1A_INTENT_CONTINUITY.md), [confidence](docs/implementation/STAGE_1B_SEMANTIC_CONFIDENCE.md), [redacted
 lineage](docs/implementation/STAGE_1C_REDACTED_LINEAGE_EXPORT.md), and
 [stream-revision](docs/implementation/STAGE_1D_STREAM_REVISION_ATOMICITY.md)
-layers, plus the review-gated [private-data policy](docs/implementation/STAGE_1E_PRIVATE_DATA_POLICY.md).
+layers, plus the [private-data policy](docs/implementation/STAGE_1E_PRIVATE_DATA_POLICY.md)
+and review-gated [session-private lineage](docs/implementation/STAGE_1F_SESSION_PRIVATE_LINEAGE.md).
 Those reports link each implemented claim to focused tests and a
 synthetic demonstration.
 4. Read the [architecture index](docs/ARCHITECTURE.md), [decision records](docs/decisions/README.md), and [roadmap](docs/ROADMAP.md) for the current
@@ -48,6 +49,7 @@ python3 -m examples.stage1b_semantic_confidence_demo
 python3 -m examples.stage1c_redacted_lineage_demo
 python3 -m examples.stage1d_stream_revision_demo
 python3 -m examples.stage1e_private_data_policy_demo
+python3 -m examples.stage1f_session_private_lineage_demo
 ```
 
 ## Status
@@ -71,8 +73,10 @@ Run the complete synthetic demo with a temporary private ledger:
 python3 -m examples.layer5_end_to_end_demo
 ```
 
-The event store preserves exact input text. Keep real-input ledgers under an
-ignored/private path such as `data/`; never commit personal conversations.
+The legacy event path preserves exact input text. Keep real-input ledgers under
+an ignored/private path such as `data/`; never commit personal conversations.
+The opt-in Stage 1F v2 path instead keeps content in process-local session memory
+and persists structural lineage only; it does not migrate legacy events.
 
 Human confirmation, confidence, and a dry-run plan are not permission signals.
 Children are read-only, and only explicit human promotion can create a
@@ -81,11 +85,16 @@ scope-specific pseudonymous references rather than raw source or local IDs.
 Continuity commands bind to the exact projected stream revision, so competing
 writes fail closed or reconcile only an exact idempotent retry.
 
-The Stage 1E review branch adds typed conservative data-policy defaults:
+Stage 1E adds typed conservative data-policy defaults:
 session-only raw source, exact-scope structural search, single-project reasoning,
 and effect-free reversible quarantine plans. Its audit deliberately reports that
 the legacy ledger still embeds private fields; no deletion or retention
 enforcement is claimed yet.
+
+The Stage 1F review branch enforces session-only storage for new v2 capture and
+extraction: raw source, statements, and metadata are absent from immutable
+events, while digest-bound structure survives restart. Clearing the vault drops
+process references but does not claim secure-memory erasure.
 
 ## License
 
