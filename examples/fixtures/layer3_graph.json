@@ -1,0 +1,14 @@
+{
+  "source_id": "src_demo_layer3",
+  "raw_text": "Build a local intent graph. Add dependency validation. Maybe explore automatic scheduling. Do not touch Krish.",
+  "confirm_action_indexes": [0, 1],
+  "dependencies": [[1, 0]],
+  "conflicts": [[2, 3]],
+  "clusters": [
+    {
+      "cluster_id": "intent_control_plane",
+      "label": "Intent control plane",
+      "member_indexes": [0, 1, 2, 3]
+    }
+  ]
+}
