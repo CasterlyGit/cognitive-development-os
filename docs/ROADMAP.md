@@ -26,11 +26,11 @@ This page remains the compact index of live GitHub delivery state.
 
 ## Open review gates
 
-1. [#36 — Local Project Decision Loop MVP](https://github.com/CasterlyGit/cognitive-development-os/issues/36), exactly two opted-in scopes and simulated routing only
+1. [#36 — Local Project Decision Loop MVP](https://github.com/CasterlyGit/cognitive-development-os/issues/36) and [#38 — guided visual product](https://github.com/CasterlyGit/cognitive-development-os/issues/38), exactly two opted-in scopes with real local decision state and simulated external routing only
 
 ## Next execution path
 
-1. Review the fixed Project Decision Loop MVP without treating its simulated
+1. Review the fixed visual Project Decision Loop MVP without treating its simulated
    Paver/Codex route as execution authority.
 2. Stop at the MVP boundary. If further investment is approved, add an
    independent local evidence evaluator to this same loop before broadening the

@@ -18,23 +18,22 @@ library:
 python3 -m pip install -e .
 ```
 
-## Project Decision Loop MVP
+## Launch the Project Decision Loop
 
-The smallest end-to-end product surface is a local CLI loop for exactly two
-explicitly opted-in projects. It records a source-backed relationship proposal,
-requires a human accept/reject decision, reuses the dependency-closed compiler,
-simulates bounded Paver/Codex routing through test doubles, and records outcome
-evidence plus a decision timeline. It scans no unrelated storage and causes no
-external effect.
+The smallest end-to-end product surface is a guided local app for exactly two
+explicitly opted-in projects. A first-time user sees what the system noticed,
+reviews the source evidence, and approves or rejects one proposed relationship.
+That click performs the real local backend transition and persists the plan,
+verification evidence, and decision timeline. Only downstream Paver/Codex
+execution is simulated; no external effect is authorized.
 
 ```bash
-python3 -m pip install -e .
-cognitive-os mvp \
-  --manifest examples/fixtures/mvp_project_decision_loop.json \
-  --store /tmp/cognitive-os-mvp.jsonl \
-  --decision accept \
-  --human-actor demo_owner
+mkdir -p data && cognitive-os-ui --store data/project-decision-loop.jsonl --open
 ```
+
+The app binds only to `127.0.0.1`, loads the committed synthetic Atlas/Beacon
+fixture, reads no ambient project data, and uses no external assets or service.
+Reopening with the same store reconstructs the exact persisted outcome.
 
 See the [MVP implementation report](docs/implementation/MVP_PROJECT_DECISION_LOOP.md)
 for the acceptance ledger, rejection demo, privacy audit, known limits, and

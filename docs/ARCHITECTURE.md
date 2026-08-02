@@ -44,7 +44,7 @@ message, or mutate another system.
 | Session-private content and structural lineage | [#30](https://github.com/CasterlyGit/cognitive-development-os/issues/30) | implemented | v2 path only; legacy data is unchanged |
 | Accepted-plan-bound decision packet | [#32](https://github.com/CasterlyGit/cognitive-development-os/issues/32) | implemented | Pure local compile; no event writes or execution |
 | Exact legacy migration planning | [#34](https://github.com/CasterlyGit/cognitive-development-os/issues/34) | implemented | Redacted plan only; mutation prerequisites remain gated |
-| Project Decision Loop MVP | [#36](https://github.com/CasterlyGit/cognitive-development-os/issues/36) | implemented — review gate | Exactly two opt-in scopes; local JSONL; Paver/Codex test doubles only |
+| Project Decision Loop product MVP | [#36](https://github.com/CasterlyGit/cognitive-development-os/issues/36) / [#38](https://github.com/CasterlyGit/cognitive-development-os/issues/38) | implemented — review gate | Guided localhost UI; real JSONL decision transition; Paver/Codex effects simulated only |
 | Krish integration proposal | [#9](https://github.com/CasterlyGit/cognitive-development-os/issues/9) | contract implemented; integration deferred | Offline contract only; live path disabled |
 
 The lean [capability execution graph](EXECUTION_GRAPH.md) separates merged,

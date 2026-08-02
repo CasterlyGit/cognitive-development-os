@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="decision-token" content="__DECISION_TOKEN__">
+    <title>Cognitive OS — Project Decision Loop</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="Cognitive OS home">
+          <span class="brand-mark" aria-hidden="true">C</span>
+          <span><strong>Cognitive OS</strong><small>Project Decision Loop</small></span>
+        </a>
+        <div class="safety-pill"><span class="pulse"></span> Local product · External actions off</div>
+      </header>
+
+      <main>
+        <section class="hero">
+          <p class="eyebrow">One guided decision · Two opted-in projects</p>
+          <h1>Turn scattered intent into<br><em>one safe next move.</em></h1>
+          <p class="hero-copy">Cognitive OS notices a dependency across your selected projects, shows its evidence, and waits for your judgment before planning anything.</p>
+        </section>
+
+        <nav class="steps" aria-label="Decision progress">
+          <div class="step active" data-step="notice"><span>1</span><b>Notice</b><small>Connect the intent</small></div>
+          <div class="step" data-step="decide"><span>2</span><b>Decide</b><small>You stay in control</small></div>
+          <div class="step" data-step="review"><span>3</span><b>Review</b><small>See proof and limits</small></div>
+        </nav>
+
+        <section id="loading" class="surface loading-card">
+          <div class="spinner"></div><p>Reconstructing local decision state…</p>
+        </section>
+
+        <section id="decision-view" class="surface hidden" aria-labelledby="decision-heading">
+          <div class="section-heading">
+            <div>
+              <p class="kicker">What the system sees</p>
+              <h2 id="decision-heading">Two projects share one critical handoff.</h2>
+            </div>
+            <span class="scope-badge">Exactly 2 scopes</span>
+          </div>
+
+          <div id="project-grid" class="project-grid"></div>
+
+          <div class="connector" aria-hidden="true"><span></span><b>depends on</b><span></span></div>
+
+          <article class="proposal-card">
+            <div class="proposal-topline">
+              <p class="kicker">Proposed relationship</p>
+              <span id="confidence" class="confidence"></span>
+            </div>
+            <h3 id="notice-copy"></h3>
+            <p id="relationship-detail" class="relationship-detail"></p>
+            <div class="evidence-block">
+              <p class="evidence-label">Why the system noticed this</p>
+              <div id="evidence-list" class="evidence-list"></div>
+            </div>
+            <div class="confidence-note">
+              <span aria-hidden="true">◎</span>
+              <p><strong>Confidence explains. It never decides.</strong><br>Your approval is the only thing that can accept this relationship.</p>
+            </div>
+          </article>
+
+          <div class="decision-panel">
+            <div>
+              <p class="kicker">Your decision</p>
+              <h3>Should these projects be planned together?</h3>
+              <p>Approve to create a bounded local plan. Reject to preserve the projects as independent.</p>
+            </div>
+            <div class="actions">
+              <button id="reject-button" class="button secondary" type="button">Reject relationship</button>
+              <button id="approve-button" class="button primary" type="button">Approve next move <span>→</span></button>
+            </div>
+          </div>
+        </section>
+
+        <section id="outcome-view" class="surface hidden" aria-labelledby="outcome-heading">
+          <div class="outcome-hero">
+            <div id="outcome-icon" class="outcome-icon" aria-hidden="true"></div>
+            <div>
+              <p id="outcome-kicker" class="kicker"></p>
+              <h2 id="outcome-heading"></h2>
+              <p id="outcome-summary"></p>
+            </div>
+          </div>
+
+          <div class="outcome-grid">
+            <article class="result-card plan-card">
+              <p class="card-number">01</p>
+              <p class="kicker">Bounded next plan</p>
+              <h3 id="plan-title"></h3>
+              <ol id="plan-list" class="plan-list"></ol>
+              <div id="no-plan" class="empty-state hidden"></div>
+            </article>
+            <article class="result-card boundary-card">
+              <p class="card-number">02</p>
+              <p class="kicker">What will not happen</p>
+              <h3>No authority silently expands.</h3>
+              <ul class="boundary-list">
+                <li>No code or command is executed</li>
+                <li>No network or external service is contacted</li>
+                <li>No GitHub, Krish, Paver, or Codex action occurs</li>
+              </ul>
+              <div id="route-receipt" class="route-receipt"></div>
+            </article>
+          </div>
+
+          <article class="evidence-surface">
+            <div class="section-heading compact">
+              <div><p class="kicker">Observed evidence</p><h3>Claim checked against the local decision state.</h3></div>
+              <span id="verification-badge" class="verification-badge"></span>
+            </div>
+            <div id="verification-list" class="verification-list"></div>
+            <div id="next-decision" class="next-decision"></div>
+          </article>
+
+          <article class="timeline-surface">
+            <p class="kicker">Decision timeline</p>
+            <h3 id="timeline-heading">Complete local trace.</h3>
+            <div id="timeline" class="timeline"></div>
+          </article>
+
+          <footer class="local-footer">
+            <div><span class="lock" aria-hidden="true">⌁</span><p><strong>Real local decision state</strong><br><span id="store-path"></span></p></div>
+            <p>External execution is deliberately simulated.</p>
+          </footer>
+        </section>
+
+        <div id="error-box" class="error-box hidden" role="alert"></div>
+      </main>
+    </div>
+    <script src="/app.js" defer></script>
+  </body>
+</html>

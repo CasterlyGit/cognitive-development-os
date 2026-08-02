@@ -27,7 +27,7 @@ GitHub issues and pull requests remain the delivery records.
 
 | Slice | Depends on | Review boundary |
 | --- | --- | --- |
-| Issue #36: Project Decision Loop MVP | Merged Stage 1 foundations | Review the two-project local loop, simulated routing, evidence timeline, and privacy audit without treating it as live execution authority |
+| Issues #36/#38: Project Decision Loop product MVP | Merged Stage 1 foundations | Review the real local decision transition, guided UI, simulated routing, evidence timeline, and privacy audit without treating it as live execution authority |
 
 ## Next
 

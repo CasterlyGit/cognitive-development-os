@@ -227,6 +227,50 @@ class ProjectDecisionLoop:
     def __init__(self, store: AppendOnlyEventStore) -> None:
         self.store = store
 
+    def preview(self, manifest: ProjectDecisionManifest) -> Dict[str, Any]:
+        """Build the safe pre-decision view without writing local state."""
+        proposal = self._validate(manifest)
+        intents = {item.atom.atom_id: item for item in manifest.intents}
+        source = intents[proposal.source_atom_id]
+        target = intents[proposal.target_atom_id]
+        by_project = []
+        for project in manifest.projects:
+            project_intents = [
+                item.atom.to_dict()
+                for item in manifest.intents
+                if item.project_id == project.project_id
+            ]
+            by_project.append(dict(project.to_dict(), intents=project_intents))
+        return {
+            "schema_version": self.SCHEMA_VERSION,
+            "mvp": "Project Decision Loop",
+            "loop_id": manifest.loop_id,
+            "project_scopes": by_project,
+            "relationship_proposal": proposal.to_dict(),
+            "notice": {
+                "source_project_id": source.project_id,
+                "source_statement": source.atom.statement,
+                "target_project_id": target.project_id,
+                "target_statement": target.atom.statement,
+                "plain_language": (
+                    "%s needs an outcome from %s before its next move is coherent."
+                    % (source.project_id.title(), target.project_id.title())
+                ),
+            },
+            "decision_required": (
+                "Approve or reject this relationship. Confidence explains the "
+                "proposal but cannot decide for you."
+            ),
+            "if_approved": (
+                "Create one dependency-closed, P1 draft-only plan and simulate "
+                "the bounded route locally."
+            ),
+            "will_not_happen": (
+                "No code runs, no service is contacted, and no external permission is granted."
+            ),
+            "external_effects": False,
+        }
+
     def run(
         self,
         manifest: ProjectDecisionManifest,
