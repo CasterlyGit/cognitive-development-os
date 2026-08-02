@@ -1,13 +1,12 @@
-# Cognitive Development OS
+# Cognitive OS
 
-Cognitive Development OS is a local-first control plane for turning messy,
-ongoing conversational intent into dependency-aware, reviewable work. Krish is
-the eventual user-facing personal AI OS; this project builds the bounded
-planning, permission, review, and learning layer without modifying Krish.
+Cognitive OS is a local-first control plane for turning messy, ongoing
+conversational intent into dependency-aware, reviewable work. It is the bounded
+planning, permission, review, and learning layer of the larger Cognitive OS.
 
 The current implementation is an early dry-run prototype. It performs no
-network calls, starts no background services, does not integrate with Krish,
-and cannot merge or deploy anything.
+network calls, starts no background services, invokes no external assistant
+runtime, and cannot merge or deploy anything.
 
 ## Evaluation path
 
@@ -29,8 +28,7 @@ python3 -m examples.layer5_end_to_end_demo
 ```
 
 3. Inspect the implementation reports for the [end-to-end decision
-packet](docs/implementation/LAYER_5_END_TO_END.md), the [draft-only Krish
-contract](docs/implementation/LAYER_6_KRISH_PROPOSAL.md), and the Stage 1
+packet](docs/implementation/LAYER_5_END_TO_END.md), and the Stage 1
 [continuity](docs/implementation/STAGE_1A_INTENT_CONTINUITY.md), [confidence](docs/implementation/STAGE_1B_SEMANTIC_CONFIDENCE.md), [redacted
 lineage](docs/implementation/STAGE_1C_REDACTED_LINEAGE_EXPORT.md), and
 [stream-revision](docs/implementation/STAGE_1D_STREAM_REVISION_ATOMICITY.md)
@@ -66,10 +64,11 @@ Compiler emits dependency-closed plans and bounded execution briefs; the local
 CLI returns one decision packet. Stage 1 adds local cognitive branches,
 deterministic confidence metadata, redacted structural lineage export, and
 stream-revision atomicity. The repository also contains a validated,
-draft-only Krish contract; it intentionally does not create an adapter.
+draft-only historical integration contract in `docs/archive/`; it intentionally
+does not create an adapter.
 
 None of these artifacts authorize writes to other repositories or services.
-They do not make network calls, access Krish, invoke a coding agent, create or
+They do not make network calls, access an external assistant runtime, invoke a coding agent, create or
 merge pull requests, deploy, or start a background service.
 
 Run the complete synthetic demo with a temporary private ledger:
