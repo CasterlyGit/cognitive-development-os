@@ -1,0 +1,8 @@
+{
+  "source_id": "src_demo_layer1",
+  "kind": "chat",
+  "raw_text": "Maybe explore a local project status view. Build nothing external yet.",
+  "metadata": {
+    "fixture": "synthetic"
+  }
+}
