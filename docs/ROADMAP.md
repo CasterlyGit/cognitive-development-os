@@ -21,7 +21,7 @@ This page remains the compact index of live GitHub delivery state.
 
 ## Next execution path
 
-1. [#18 — Stage 1A intent continuity and cognitive branch core](https://github.com/CasterlyGit/cognitive-development-os/issues/18), stacked on the vision review branch but independent of PR #13/#14 runtime code
+1. [#18 — Stage 1A intent continuity and cognitive branch core](https://github.com/CasterlyGit/cognitive-development-os/issues/18) in [PR #19](https://github.com/CasterlyGit/cognitive-development-os/pull/19), stacked on the vision review branch but independent of PR #13/#14 runtime code
 2. Typed semantic confidence with safe exploration fallback
 3. Local retention, redaction, export, and archived-branch policy after the named human defaults are settled
 

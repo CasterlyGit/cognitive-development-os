@@ -19,7 +19,7 @@ GitHub issues and pull requests remain the delivery records.
 | --- | --- | --- |
 | PR #13: end-to-end decision packet | Merged Layers 1–4 | Human review of the first cross-cutting dry-run packet |
 | PR #17: public north-star vision | Merged evidence and truthful claim audit | Human/independent scope review of the governing specification |
-| Issue #18 review branch: branch continuity core | Merged Layers 1–4; stacked only for the PR #17 document | Read-only child branches, explicit promotion, immutable plan versions |
+| PR #19 / issue #18: branch continuity core | Merged Layers 1–4; stacked only for the PR #17 document | Read-only child branches, explicit promotion, immutable plan versions |
 | PR #14: disabled Krish contract proposal | PR #13 | Contract review only; no integration authority |
 
 ## Next

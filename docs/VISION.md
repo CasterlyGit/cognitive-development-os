@@ -235,7 +235,7 @@ on the dependency path. **Deferred** means valuable but intentionally later.
 | Dependency/conflict/cluster graph | **Implemented** | Merged Layer 3 with cycle rejection and deterministic reconstruction. |
 | Dry-run PR Compiler and bounded Codex brief | **Implemented** | Merged Layer 4; P1 draft-only and no executor invocation. |
 | End-to-end decision packet | **Implemented — review gate** | PR #13 is CI-green and open; it must be reviewed before joining `main`. |
-| Cognitive branch core and immutable plan versions | **Implemented — review gate** | Issue #18 review branch has read-only children, exact atom/source lineage, human promotion, supersession, stale-state rejection, idempotent replay, restart tests, and a synthetic demo. It is not merged or a live Sidecar. |
+| Cognitive branch core and immutable plan versions | **Implemented — review gate** | [PR #19](https://github.com/CasterlyGit/cognitive-development-os/pull/19) has read-only children, exact atom/source lineage, human promotion, supersession, stale-state rejection, idempotent replay, restart tests, and a synthetic demo. It is not merged or a live Sidecar. |
 | Semantic extraction with confidence | **Planned — next** | Must fail uncertain input to exploration and never self-confirm. |
 | Branch retention, redaction, export, and archived-search policy | **Planned — decision needed** | Requires local privacy tests and human choices for retention and archived-branch search defaults. |
 | Multi-project intent field and relationship proposals | **Planned** | Requires evidence/confidence on every proposed edge and human conflict resolution. |
@@ -281,8 +281,8 @@ Acceptance requires typed models, degraded-path tests, a synthetic end-to-end
 fixture, no external effects, and a reviewable decision packet showing a branch
 that changes the proposed plan without rewriting its history.
 
-[Issue #18](https://github.com/CasterlyGit/cognitive-development-os/issues/18)
-is the first thin slice: it implements the local branch, promotion, immutable
+[PR #19](https://github.com/CasterlyGit/cognitive-development-os/pull/19)
+implements the first thin slice from [issue #18](https://github.com/CasterlyGit/cognitive-development-os/issues/18): the local branch, promotion, immutable
 plan-version, stale-state, replay, and restart core on a review branch. Semantic
 confidence and private-source lifecycle policy remain separate next work, so
 Stage 1 as a whole is not yet complete.
