@@ -1,0 +1,47 @@
+{
+  "continuity_id": "continuity_demo_stage1a",
+  "graph_id": "graph_demo_stage1a",
+  "root_branch_id": "accepted_path",
+  "atoms": [
+    {
+      "atom_id": "foundation",
+      "source_id": "src_demo_foundation",
+      "kind": "actionable",
+      "state": "confirmed",
+      "statement": "Build the local continuity model."
+    },
+    {
+      "atom_id": "current_path",
+      "source_id": "src_demo_current_path",
+      "kind": "actionable",
+      "state": "confirmed",
+      "statement": "Use one mutable plan record."
+    },
+    {
+      "atom_id": "constraint",
+      "source_id": "src_demo_constraint",
+      "kind": "constraint",
+      "state": "proposed",
+      "statement": "Do not create external effects."
+    },
+    {
+      "atom_id": "immutable_versions",
+      "source_id": "src_demo_immutable_versions",
+      "kind": "actionable",
+      "state": "confirmed",
+      "statement": "Use immutable superseding plan versions."
+    }
+  ],
+  "dependencies": [
+    ["current_path", "foundation"],
+    ["immutable_versions", "foundation"]
+  ],
+  "root_atom_ids": ["foundation", "current_path", "constraint"],
+  "child": {
+    "branch_id": "side_question",
+    "anchor_atom_id": "current_path",
+    "inherited_atom_ids": ["current_path", "constraint"],
+    "proposal_atom_id": "immutable_versions",
+    "replace_atom_ids": ["current_path"]
+  }
+}

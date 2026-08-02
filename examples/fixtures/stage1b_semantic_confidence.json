@@ -1,0 +1,10 @@
+{
+  "source_id": "src_demo_stage1b",
+  "raw_text": "Maybe build and ship a dashboard. Build the local prototype. Do not touch Krish. A calm blue surface.",
+  "expected": [
+    {"kind": "exploration", "band": "medium"},
+    {"kind": "actionable", "band": "high"},
+    {"kind": "constraint", "band": "high"},
+    {"kind": "exploration", "band": "low"}
+  ]
+}
