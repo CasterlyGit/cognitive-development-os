@@ -237,7 +237,8 @@ on the dependency path. **Deferred** means valuable but intentionally later.
 | End-to-end decision packet | **Implemented — review gate** | PR #13 is CI-green and open; it must be reviewed before joining `main`. |
 | Cognitive branch core and immutable plan versions | **Implemented — review gate** | [PR #19](https://github.com/CasterlyGit/cognitive-development-os/pull/19) has read-only children, exact atom/source lineage, human promotion, supersession, stale-state rejection, idempotent replay, restart tests, and a synthetic demo. It is not merged or a live Sidecar. |
 | Semantic extraction with confidence | **Implemented — review gate** | [PR #21](https://github.com/CasterlyGit/cognitive-development-os/pull/21) adds typed deterministic bands/scores/signals, hedged-action fallback to exploration, historical `unassessed` replay, and tests that confidence cannot confirm intent. It has no model/API inference. |
-| Branch retention, redaction, export, and archived-search policy | **Planned — decision needed** | Requires local privacy tests and human choices for retention and archived-branch search defaults. |
+| Redacted structural lineage export | **Implemented — review gate** | Issue #22 review branch emits deterministic scope-specific public references after validating exact local lineage; its schema has no raw source, statement, span, metadata, timestamp, content-hash, or local-ID field. |
+| Local retention, deletion, and archived-search policy | **Planned — decision needed** | Requires human choices for retention duration, deletion semantics, and archived-branch search defaults. |
 | Multi-project intent field and relationship proposals | **Planned** | Requires evidence/confidence on every proposed edge and human conflict resolution. |
 | Evidence-driven worker routing and Paver runtime rail | **Planned** | Requires mocked dispatch, receipts, telemetry, and proof that routing cannot expand permission. |
 | Outcome verifier, review, observability, and lesson memory | **Planned** | Requires normalized attempts, independent evidence, retry caps, quarantine, timelines, and human-promoted lessons. |
@@ -292,6 +293,12 @@ implements the next independently reviewable slice from [issue #20](https://gith
 for the local rules extractor, safe fallback for hedged action, and explicit
 proof that confidence is metadata rather than authority. Learned/model-based
 semantic inference remains outside this slice.
+
+Issue #22 implements the safe export portion of the privacy boundary: it
+validates exact private lineage locally, then emits only structural typed state
+and scope-specific pseudonymous references. Retention, deletion, and archived
+search remain undecided, so Stage 1 as a whole remains a review-gated partial
+implementation.
 
 ### Stage 2 — the multi-project intent field
 

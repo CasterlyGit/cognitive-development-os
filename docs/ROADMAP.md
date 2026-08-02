@@ -23,7 +23,8 @@ This page remains the compact index of live GitHub delivery state.
 
 1. [#18 — Stage 1A intent continuity and cognitive branch core](https://github.com/CasterlyGit/cognitive-development-os/issues/18) in [PR #19](https://github.com/CasterlyGit/cognitive-development-os/pull/19), stacked on the vision review branch but independent of PR #13/#14 runtime code
 2. [#20 — Stage 1B typed semantic confidence](https://github.com/CasterlyGit/cognitive-development-os/issues/20) in [PR #21](https://github.com/CasterlyGit/cognitive-development-os/pull/21), stacked for linear review but independently testable
-3. Local retention, redaction, export, and archived-branch policy after the named human defaults are settled
+3. [#22 — Stage 1C redacted structural lineage export](https://github.com/CasterlyGit/cognitive-development-os/issues/22), stacked on the typed Stage 1 state
+4. Local retention, deletion, and archived-branch policy after the named human defaults are settled
 
 The [capability execution graph](EXECUTION_GRAPH.md) records dependencies and
 the precise boundary between these review gates and later stages.
