@@ -13,6 +13,7 @@ This page remains the compact index of live GitHub delivery state.
 - [#6 — Living intent graph](https://github.com/CasterlyGit/cognitive-development-os/issues/6)
 - [#7 — Dry-run PR-plan compiler and execution brief](https://github.com/CasterlyGit/cognitive-development-os/issues/7)
 - [#8 — End-to-end decision packet](https://github.com/CasterlyGit/cognitive-development-os/issues/8)
+- [#26 — Conservative private-data and scope defaults](https://github.com/CasterlyGit/cognitive-development-os/issues/26)
 
 ## Open review gates
 
@@ -20,9 +21,8 @@ This page remains the compact index of live GitHub delivery state.
 
 ## Next execution path
 
-1. Define conservative local retention, deletion, and archived-search defaults.
-2. Add the opt-in, project-scoped intent field with evidence-backed relationship proposals.
-3. Connect accepted continuity plan versions to the verified decision packet without enabling execution.
+1. Add the opt-in, project-scoped intent field with evidence-backed relationship proposals.
+2. Connect accepted continuity plan versions to the verified decision packet without enabling execution.
 
 The [capability execution graph](EXECUTION_GRAPH.md) records dependencies and
 the precise boundary between these review gates and later stages.

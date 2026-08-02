@@ -11,6 +11,7 @@ may supersede one while preserving its provenance.
 | [0003](0003-cognitive-branch-continuity.md) | proposed | Isolate child branches and supersede accepted plans only through explicit promotion |
 | [0004](0004-public-lineage-export-boundary.md) | proposed | Export structural lineage through scoped references without raw-source fields |
 | [0005](0005-continuity-stream-revision.md) | proposed | Bind continuity validation to an atomic stream-local append revision |
+| [0006](0006-private-data-and-scope-defaults.md) | accepted | Keep private-data and reasoning scope defaults explicit and fail closed |
 
 ## Record template
 
