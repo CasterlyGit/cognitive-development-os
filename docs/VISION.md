@@ -242,7 +242,8 @@ on the dependency path. **Deferred** means valuable but intentionally later.
 | Atomic continuity stream revision | **Implemented** | [PR #25](https://github.com/CasterlyGit/cognitive-development-os/pull/25) merged exact projected-stream revision checks under the append lock, distinct-writer rejection without append, and exact-retry reconciliation. |
 | Local retention, deletion, and archived-search policy | **Implemented** | [PR #28](https://github.com/CasterlyGit/cognitive-development-os/pull/28) merged session-only defaults, bounded opt-in persistence policy, exact archived scope, reversible quarantine planning, and a privacy-safe audit. It does not implement deletion. |
 | Session-private content and structural lineage | **Implemented** | [PR #31](https://github.com/CasterlyGit/cognitive-development-os/pull/31) merged a v2 path whose raw source and metadata stay in process-local session memory while strict digest-bound structural events survive restart. Legacy migration and secure erasure remain unimplemented. |
-| Accepted-plan-bound decision packet | **Implemented — review gate** | Issue #32 / Stage 1G binds the exact current accepted plan version and scoped graph digest to the existing draft-only PR Compiler output. It is pure, local, and non-executing. |
+| Accepted-plan-bound decision packet | **Implemented** | [PR #33](https://github.com/CasterlyGit/cognitive-development-os/pull/33) merged exact current plan-version and scoped graph binding to the existing draft-only PR Compiler output. It is pure, local, and non-executing. |
+| Exact legacy migration planning | **Implemented — review gate** | Issue #34 / Stage 1H inventories exact private-bearing legacy events and derives redacted structural targets. The plan is stale-safe and explicitly non-executable; no rewrite or deletion exists. |
 | Multi-project intent field and relationship proposals | **Planned** | Requires evidence/confidence on every proposed edge and human conflict resolution. |
 | Evidence-driven worker routing and Paver runtime rail | **Planned** | Requires mocked dispatch, receipts, telemetry, and proof that routing cannot expand permission. |
 | Outcome verifier, review, observability, and lesson memory | **Planned** | Requires normalized attempts, independent evidence, retry caps, quarantine, timelines, and human-promoted lessons. |
@@ -317,10 +318,17 @@ strict structural descriptors and digest bindings. It deliberately leaves the
 legacy path unchanged and does not claim migration, secure erasure, persistent
 retention, or deletion.
 
-[Issue #32](https://github.com/CasterlyGit/cognitive-development-os/issues/32)
-connects the current accepted plan version to the PR Compiler and decision
-packet. The bridge rejects stale versions and graph relationships that escape
-accepted intent, writes no event, and preserves the P1 draft-only boundary.
+[PR #33](https://github.com/CasterlyGit/cognitive-development-os/pull/33)
+merged the current accepted plan-version connection to the PR Compiler and
+decision packet. The bridge rejects stale versions and graph relationships that
+escape accepted intent, writes no event, and preserves the P1 draft-only
+boundary.
+
+[Issue #34](https://github.com/CasterlyGit/cognitive-development-os/issues/34)
+adds a read-only plan for exact legacy sources. It validates private-bearing
+events against the full ledger digest, emits only structural targets and
+fingerprints, and lists every missing prerequisite. It cannot rewrite,
+quarantine, delete, or otherwise mutate the ledger.
 
 ### Stage 2 — the multi-project intent field
 

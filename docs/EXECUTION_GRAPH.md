@@ -20,20 +20,19 @@ GitHub issues and pull requests remain the delivery records.
 | Atomic continuity stream revision | PR #25 | Fail-closed concurrent continuity appends |
 | Conservative private-data policy | PR #28 | Private-by-default typed policy and privacy-safe legacy audit |
 | Session-private content boundary | PR #31 | New v2 inputs persist structural lineage without raw content |
+| Accepted-plan packet bridge | PR #33 | Exact current plan and scoped graph bind one draft-only packet |
 
 ## Gated
 
 | Gate | Depends on | What remains gated |
 | --- | --- | --- |
-| Issue #32: accepted-plan packet bridge | Merged branch/plan and compiler layers | Review exact version binding without enabling execution |
+| Issue #34: exact legacy migration plan | Merged Stage 1E–1F privacy boundary | Review redacted inventory and prerequisites without authorizing mutation |
 
 ## Next
 
-1. Review the Stage 1G accepted-plan packet bridge without treating a draft as
-   execution authority or outcome evidence.
-2. Prepare a read-only, exact-scope migration plan for legacy events; any rewrite
-   or deletion remains separately gated.
-3. Begin the opt-in multi-project intent field with a single-project default,
+1. Review the Stage 1H legacy migration plan without treating it as rewrite,
+   quarantine, deletion, or migration authority.
+2. Begin the opt-in multi-project intent field with a single-project default,
    exact project enumeration, and evidence-backed relationship proposals.
 
 ## Deferred or rejected

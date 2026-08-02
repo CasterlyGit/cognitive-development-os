@@ -14,6 +14,7 @@ may supersede one while preserving its provenance.
 | [0006](0006-private-data-and-reasoning-scope-defaults.md) | accepted | Default to session-only raw data, exact archived scope, reversible deletion planning, and single-project reasoning |
 | [0007](0007-session-private-content-and-structural-lineage.md) | accepted | Keep v2 private content in a process-local session vault while immutable events retain strict structural lineage |
 | [0008](0008-bind-current-accepted-plan-to-draft-packet.md) | accepted | Bind the exact current accepted plan version and scoped graph to a draft-only decision packet |
+| [0009](0009-plan-legacy-migration-before-mutation.md) | accepted | Inventory exact private-bearing legacy events and require a stale-safe non-executable plan before mutation |
 
 ## Record template
 
