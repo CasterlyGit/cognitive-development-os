@@ -20,12 +20,12 @@ for completed layers live in `docs/implementation/`.
 
 ## Status
 
-The first implemented layer is a typed, append-only Intent Inbox and event
-ledger. Intent interpretation, graph planning, PR-plan compilation, and the
-end-to-end decision packet are being built as later layers. None of these plans
-authorize writes to other repositories or services.
+Implemented layers include a typed, append-only Intent Inbox/event ledger and a
+conservative intent-atom lifecycle with explicit human confirmation boundaries.
+Graph planning, PR-plan compilation, and the end-to-end decision packet are
+being built as later layers. None of these plans authorize writes to other
+repositories or services.
 
 ## License
 
 Licensed under the MIT License. See [LICENSE](LICENSE).
-
