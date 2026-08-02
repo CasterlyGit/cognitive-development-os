@@ -24,8 +24,8 @@ message, or mutate another system.
 |---|---:|---|---|
 | Intent Inbox and event store | [#1](https://github.com/CasterlyGit/cognitive-development-os/issues/1) | implemented | Local append-only capture |
 | Intent atoms and lifecycle | [#3](https://github.com/CasterlyGit/cognitive-development-os/issues/3) | implemented | Human confirmation required |
-| Intent graph | [#6](https://github.com/CasterlyGit/cognitive-development-os/issues/6) | planned | Dependencies, conflicts, clusters |
-| PR-plan compiler | [#7](https://github.com/CasterlyGit/cognitive-development-os/issues/7) | planned | Draft artifacts only |
+| Intent graph | [#6](https://github.com/CasterlyGit/cognitive-development-os/issues/6) | implemented | Dependencies, conflicts, clusters |
+| PR-plan compiler | [#7](https://github.com/CasterlyGit/cognitive-development-os/issues/7) | implemented | Draft artifacts only |
 | End-to-end dry run | [#8](https://github.com/CasterlyGit/cognitive-development-os/issues/8) | planned | No external effects |
 | Krish integration proposal | [#9](https://github.com/CasterlyGit/cognitive-development-os/issues/9) | deferred | Documentation only; new authorization required |
 

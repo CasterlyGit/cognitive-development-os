@@ -25,8 +25,9 @@ Project direction and decisions are public in the [architecture index](docs/ARCH
 
 Implemented layers include a typed, append-only Intent Inbox/event ledger, a
 conservative intent-atom lifecycle with explicit human confirmation boundaries,
-and a restart-safe dependency/conflict/cluster intent graph. PR-plan compilation
-and the end-to-end decision packet are later layers. None of these plans
+and a restart-safe dependency/conflict/cluster intent graph. A dry-run PR
+Compiler now emits dependency-closed plans and bounded Codex execution briefs;
+the end-to-end decision packet is the next layer. None of these artifacts
 authorize writes to other repositories or services.
 
 ## License
