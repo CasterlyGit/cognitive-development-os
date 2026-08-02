@@ -3,6 +3,9 @@
 GitHub Issues define meaningful product work; pull requests deliver one coherent
 verified slice. This file is an index, not a second tracker.
 
+The [big vision](VISION.md) is the product north star and dependency roadmap.
+This page remains the compact index of live GitHub delivery state.
+
 ## Completed
 
 - [#1 — Intent Inbox and append-only source/event store](https://github.com/CasterlyGit/cognitive-development-os/issues/1)

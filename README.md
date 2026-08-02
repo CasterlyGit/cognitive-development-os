@@ -19,7 +19,8 @@ Implementation proceeds as independently reviewable layers. Reports and proof
 for completed layers live in `docs/implementation/`.
 
 Project direction and decisions are public in the [architecture index](docs/ARCHITECTURE.md),
-[issue-based roadmap](docs/ROADMAP.md), and [ADR index](docs/decisions/README.md).
+[big vision](docs/VISION.md), [issue-based roadmap](docs/ROADMAP.md), and
+[ADR index](docs/decisions/README.md).
 
 ## Status
 
