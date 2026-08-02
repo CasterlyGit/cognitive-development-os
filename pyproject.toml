@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cognitive-development-os"
+version = "0.1.0"
+description = "Local-first intent control-plane prototype"
+requires-python = ">=3.9"
+
+[tool.setuptools.packages.find]
+include = ["cognitive_os*"]
