@@ -1,0 +1,47 @@
+{
+  "graph_id": "graph_demo_compiler",
+  "atoms": [
+    {
+      "atom_id": "typed_models",
+      "kind": "actionable",
+      "state": "confirmed",
+      "statement": "Define typed compiler models."
+    },
+    {
+      "atom_id": "compile_cut",
+      "kind": "actionable",
+      "state": "confirmed",
+      "statement": "Compile a coherent graph cut."
+    },
+    {
+      "atom_id": "live_creation",
+      "kind": "exploration",
+      "state": "proposed",
+      "statement": "Maybe create live pull requests later."
+    },
+    {
+      "atom_id": "dry_run_constraint",
+      "kind": "constraint",
+      "state": "proposed",
+      "statement": "Do not create external artifacts."
+    }
+  ],
+  "dependencies": [["compile_cut", "typed_models"]],
+  "conflicts": [["compile_cut", "live_creation"]],
+  "cluster": {
+    "cluster_id": "pr_compiler",
+    "label": "PR Compiler",
+    "members": ["typed_models", "compile_cut", "live_creation", "dry_run_constraint"]
+  },
+  "request": {
+    "title": "Add the dry-run PR Compiler",
+    "outcome": "Produce a dependency-closed PR plan and bounded Codex brief.",
+    "target_atom_ids": ["compile_cut"],
+    "owned_paths": ["cognitive_os/compiler.py", "tests/test_compiler.py"],
+    "acceptance_criteria": ["The selected graph cut is dependency-closed and conflict-free."],
+    "verification_steps": ["python3 -m unittest -v tests.test_compiler"],
+    "explicit_exclusions": ["Do not create a GitHub pull request from the runtime."],
+    "risk": "low",
+    "max_atoms": 8
+  }
+}
