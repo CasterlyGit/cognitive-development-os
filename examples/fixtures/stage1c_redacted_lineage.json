@@ -1,0 +1,47 @@
+{
+  "export_scope_key": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "graph_id": "local_graph_PRIVATE_DEMO",
+  "continuity_id": "local_continuity_PRIVATE_DEMO",
+  "root_branch_id": "local_branch_PRIVATE_ACCEPTED",
+  "atoms": [
+    {
+      "atom_id": "foundation",
+      "source_id": "local_source_PRIVATE_ALPHA",
+      "state": "confirmed",
+      "raw_text": "Build PRIVATE_ALPHA local lineage."
+    },
+    {
+      "atom_id": "current_path",
+      "source_id": "local_source_PRIVATE_BETA",
+      "state": "confirmed",
+      "raw_text": "Build PRIVATE_BETA mutable plan."
+    },
+    {
+      "atom_id": "constraint",
+      "source_id": "local_source_PRIVATE_GAMMA",
+      "state": "proposed",
+      "raw_text": "Do not publish PRIVATE_GAMMA source."
+    },
+    {
+      "atom_id": "alternative",
+      "source_id": "local_source_PRIVATE_DELTA",
+      "state": "confirmed",
+      "raw_text": "Create PRIVATE_DELTA immutable plan."
+    }
+  ],
+  "dependencies": [
+    ["current_path", "foundation"],
+    ["alternative", "foundation"]
+  ],
+  "root_atom_ids": ["foundation", "current_path", "constraint"],
+  "child_branch_id": "local_branch_PRIVATE_SIDECAR",
+  "leak_sentinels": [
+    "PRIVATE_ALPHA",
+    "PRIVATE_BETA",
+    "PRIVATE_GAMMA",
+    "PRIVATE_DELTA",
+    "PRIVATE_OWNER",
+    "PRIVATE_ACCEPTED",
+    "PRIVATE_SIDECAR"
+  ]
+}

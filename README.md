@@ -15,6 +15,7 @@ and cannot merge or deploy anything.
 python3 -m unittest discover -v
 python3 -m examples.stage1a_intent_continuity_demo
 python3 -m examples.stage1b_semantic_confidence_demo
+python3 -m examples.stage1c_redacted_lineage_demo
 ```
 
 Implementation proceeds as independently reviewable layers. Reports and proof
@@ -39,6 +40,10 @@ repositories or services.
 The Stage 1B review branch adds typed, deterministic semantic-confidence
 metadata. Hedged action falls back to exploration, historical atoms replay as
 explicitly unassessed, and confidence never confirms intent or grants authority.
+
+The Stage 1C review branch can render branch and plan lineage as a structural
+public packet with scope-specific pseudonymous references. Its schema has no raw
+source, statement, span, metadata, timestamp, content-hash, or local-ID field.
 
 ## License
 
