@@ -236,7 +236,7 @@ on the dependency path. **Deferred** means valuable but intentionally later.
 | Dry-run PR Compiler and bounded Codex brief | **Implemented** | Merged Layer 4; P1 draft-only and no executor invocation. |
 | End-to-end decision packet | **Implemented — review gate** | PR #13 is CI-green and open; it must be reviewed before joining `main`. |
 | Cognitive branch core and immutable plan versions | **Implemented — review gate** | [PR #19](https://github.com/CasterlyGit/cognitive-development-os/pull/19) has read-only children, exact atom/source lineage, human promotion, supersession, stale-state rejection, idempotent replay, restart tests, and a synthetic demo. It is not merged or a live Sidecar. |
-| Semantic extraction with confidence | **Planned — next** | Must fail uncertain input to exploration and never self-confirm. |
+| Semantic extraction with confidence | **Implemented — review gate** | [PR #21](https://github.com/CasterlyGit/cognitive-development-os/pull/21) adds typed deterministic bands/scores/signals, hedged-action fallback to exploration, historical `unassessed` replay, and tests that confidence cannot confirm intent. It has no model/API inference. |
 | Branch retention, redaction, export, and archived-search policy | **Planned — decision needed** | Requires local privacy tests and human choices for retention and archived-branch search defaults. |
 | Multi-project intent field and relationship proposals | **Planned** | Requires evidence/confidence on every proposed edge and human conflict resolution. |
 | Evidence-driven worker routing and Paver runtime rail | **Planned** | Requires mocked dispatch, receipts, telemetry, and proof that routing cannot expand permission. |
@@ -283,9 +283,15 @@ that changes the proposed plan without rewriting its history.
 
 [PR #19](https://github.com/CasterlyGit/cognitive-development-os/pull/19)
 implements the first thin slice from [issue #18](https://github.com/CasterlyGit/cognitive-development-os/issues/18): the local branch, promotion, immutable
-plan-version, stale-state, replay, and restart core on a review branch. Semantic
-confidence and private-source lifecycle policy remain separate next work, so
-Stage 1 as a whole is not yet complete.
+plan-version, stale-state, replay, and restart core on a review branch. The
+private-source lifecycle policy remains separate next work, so Stage 1 as a
+whole is not yet complete.
+
+[PR #21](https://github.com/CasterlyGit/cognitive-development-os/pull/21)
+implements the next independently reviewable slice from [issue #20](https://github.com/CasterlyGit/cognitive-development-os/issues/20): typed confidence
+for the local rules extractor, safe fallback for hedged action, and explicit
+proof that confidence is metadata rather than authority. Learned/model-based
+semantic inference remains outside this slice.
 
 ### Stage 2 — the multi-project intent field
 
