@@ -238,6 +238,7 @@ on the dependency path. **Deferred** means valuable but intentionally later.
 | Cognitive branch core and immutable plan versions | **Implemented — review gate** | [PR #19](https://github.com/CasterlyGit/cognitive-development-os/pull/19) has read-only children, exact atom/source lineage, human promotion, supersession, stale-state rejection, idempotent replay, restart tests, and a synthetic demo. It is not merged or a live Sidecar. |
 | Semantic extraction with confidence | **Implemented — review gate** | [PR #21](https://github.com/CasterlyGit/cognitive-development-os/pull/21) adds typed deterministic bands/scores/signals, hedged-action fallback to exploration, historical `unassessed` replay, and tests that confidence cannot confirm intent. It has no model/API inference. |
 | Redacted structural lineage export | **Implemented — review gate** | [PR #23](https://github.com/CasterlyGit/cognitive-development-os/pull/23) emits deterministic scope-specific public references after validating exact local lineage; its schema has no raw source, statement, span, metadata, timestamp, content-hash, or local-ID field. |
+| Atomic continuity stream revision | **Implemented — review gate** | Issue #24 review branch checks the exact projected stream revision under the append lock, rejects distinct concurrent writers without append, and reconciles an exact racing retry to one event. |
 | Local retention, deletion, and archived-search policy | **Planned — decision needed** | Requires human choices for retention duration, deletion semantics, and archived-branch search defaults. |
 | Multi-project intent field and relationship proposals | **Planned** | Requires evidence/confidence on every proposed edge and human conflict resolution. |
 | Evidence-driven worker routing and Paver runtime rail | **Planned** | Requires mocked dispatch, receipts, telemetry, and proof that routing cannot expand permission. |
@@ -300,6 +301,11 @@ validates exact private lineage locally, then emits only structural typed state
 and scope-specific pseudonymous references. Retention, deletion, and archived
 search remain undecided, so Stage 1 as a whole remains a review-gated partial
 implementation.
+
+Issue #24 hardens the same local aggregate against validation/append races. Each
+command carries the stream revision observed with its projection into the locked
+append; a distinct concurrent change becomes a retryable stale-state result,
+while the same operation racing itself reconciles to the existing event.
 
 ### Stage 2 — the multi-project intent field
 

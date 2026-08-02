@@ -9,6 +9,7 @@ from cognitive_os.store import (
     CorruptStoreError,
     DuplicateEventError,
     IntentInbox,
+    StreamRevisionError,
 )
 
 
@@ -58,6 +59,37 @@ class IntentInboxTests(unittest.TestCase):
         self.path.write_text(json.dumps(value) + "\n", encoding="utf-8")
         with self.assertRaises(CorruptStoreError):
             self.store.read_all()
+
+    def test_expected_stream_revision_is_checked_under_append_lock(self):
+        self.store.append("target", "one", {}, expected_stream_revision=0)
+        before = len(self.store.read_all())
+        with self.assertRaisesRegex(StreamRevisionError, "expected 0, actual 1"):
+            self.store.append("target", "stale", {}, expected_stream_revision=0)
+        self.assertEqual(before, len(self.store.read_all()))
+        second = self.store.append(
+            "target", "two", {}, expected_stream_revision=1
+        )
+        self.assertEqual("two", second.event_type)
+
+    def test_stream_revision_ignores_unrelated_streams(self):
+        self.store.append("other", "one", {})
+        event = self.store.append(
+            "target", "first", {}, expected_stream_revision=0
+        )
+        self.assertEqual("target", event.stream_id)
+
+    def test_invalid_expected_stream_revision_is_rejected_without_write(self):
+        for invalid in (-1, 1.5, True, "0"):
+            with self.subTest(invalid=invalid):
+                before = len(self.store.read_all())
+                with self.assertRaises(ValueError):
+                    self.store.append(
+                        "target",
+                        "invalid",
+                        {},
+                        expected_stream_revision=invalid,
+                    )
+                self.assertEqual(before, len(self.store.read_all()))
 
 
 if __name__ == "__main__":

@@ -43,6 +43,21 @@ def atom(
     )
 
 
+class InjectingStore(AppendOnlyEventStore):
+    """Inject one competing append immediately before a revision-checked append."""
+
+    def __init__(self, path):
+        super().__init__(path)
+        self.before_revision_append = None
+
+    def append(self, *args, **kwargs):
+        callback = self.before_revision_append
+        if callback is not None and kwargs.get("expected_stream_revision") is not None:
+            self.before_revision_append = None
+            callback()
+        return super().append(*args, **kwargs)
+
+
 class IntentContinuityTests(unittest.TestCase):
     def setUp(self):
         self.temp = TemporaryDirectory()
@@ -188,6 +203,81 @@ class IntentContinuityTests(unittest.TestCase):
         replayed = self.promote()
         self.assertEqual(event_count, len(self.store.read_all()))
         self.assertEqual(promoted.to_dict(), replayed.to_dict())
+
+    def test_distinct_concurrent_writer_rejects_without_poisoning_history(self):
+        self.open_branch("target", "open-target")
+        self.open_branch("other", "open-other")
+        racing_store = InjectingStore(self.path)
+        racing = IntentContinuity("continuity_fixture", racing_store)
+
+        def competing_archive():
+            IntentContinuity(
+                "continuity_fixture", AppendOnlyEventStore(self.path)
+            ).archive(
+                branch_id="other",
+                actor_id="competing_writer",
+                reason="Synthetic race winner.",
+                operation_id="competing-archive",
+            )
+
+        racing_store.before_revision_append = competing_archive
+        with self.assertRaisesRegex(ContinuityError, "changed during append"):
+            racing.propose_atom(
+                self.graph.snapshot(),
+                branch_id="target",
+                atom_id="alternative",
+                operation_id="racing-proposal",
+            )
+        restarted = IntentContinuity(
+            "continuity_fixture", AppendOnlyEventStore(self.path)
+        ).snapshot()
+        self.assertEqual(BranchStatus.ARCHIVED, restarted.branches["other"].status)
+        self.assertEqual(BranchStatus.ACTIVE, restarted.branches["target"].status)
+        self.assertEqual((), restarted.branches["target"].proposals)
+
+        retried = racing.propose_atom(
+            self.graph.snapshot(),
+            branch_id="target",
+            atom_id="alternative",
+            operation_id="racing-proposal",
+        )
+        self.assertEqual(
+            ("alternative",),
+            tuple(item.atom_id for item in retried.branches["target"].proposals),
+        )
+
+    def test_exact_concurrent_retry_reconciles_to_one_event(self):
+        self.open_branch("target", "open-target")
+        racing_store = InjectingStore(self.path)
+        racing = IntentContinuity("continuity_fixture", racing_store)
+        graph_snapshot = self.graph.snapshot()
+
+        def competing_exact_retry():
+            IntentContinuity(
+                "continuity_fixture", AppendOnlyEventStore(self.path)
+            ).propose_atom(
+                graph_snapshot,
+                branch_id="target",
+                atom_id="alternative",
+                operation_id="same-racing-proposal",
+            )
+
+        before = len(self.store.events_for("continuity_fixture"))
+        racing_store.before_revision_append = competing_exact_retry
+        reconciled = racing.propose_atom(
+            graph_snapshot,
+            branch_id="target",
+            atom_id="alternative",
+            operation_id="same-racing-proposal",
+        )
+        after = len(self.store.events_for("continuity_fixture"))
+        self.assertEqual(before + 1, after)
+        self.assertEqual(
+            ("alternative",),
+            tuple(
+                item.atom_id for item in reconciled.branches["target"].proposals
+            ),
+        )
 
     def test_operation_id_reuse_with_changed_input_fails_closed(self):
         self.open_branch()
