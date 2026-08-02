@@ -1,0 +1,66 @@
+name: Subsystem story
+description: Propose one bounded, verifiable product capability.
+title: "[Subsystem]: "
+labels: ["type:feature", "status:ready"]
+body:
+  - type: markdown
+    attributes:
+      value: Keep the story outcome-focused and small enough for one coherent PR.
+  - type: textarea
+    id: outcome
+    attributes:
+      label: User-visible outcome
+      description: What becomes possible, and for whom?
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context and provenance
+      description: Link prior issues, decisions, or source artifacts; do not paste private conversations.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance evidence
+      description: List observable claims and how each will be verified.
+      placeholder: "- [ ] Claim — test or observation"
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Owned scope
+      description: Expected components or paths this story may change.
+    validations:
+      required: true
+  - type: textarea
+    id: exclusions
+    attributes:
+      label: Explicit exclusions
+      description: Effects, systems, and adjacent work this story must not touch.
+    validations:
+      required: true
+  - type: dropdown
+    id: risk
+    attributes:
+      label: Risk
+      options:
+        - low — local and readily reversible
+        - medium — cross-cutting or moderately consequential
+        - high — external, sensitive, or difficult to reverse
+    validations:
+      required: true
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies and decisions
+      description: List blocking issues and any human decision required.
+  - type: checkboxes
+    id: boundary
+    attributes:
+      label: Safety boundary
+      options:
+        - label: This issue does not grant authority beyond its explicit scope.
+          required: true

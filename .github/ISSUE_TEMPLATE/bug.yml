@@ -1,0 +1,47 @@
+name: Bug report
+description: Report reproducible incorrect or degraded behavior.
+title: "[Bug]: "
+labels: ["type:bug", "status:ready"]
+body:
+  - type: textarea
+    id: observed
+    attributes:
+      label: Observed behavior
+      description: What happened? Use synthetic or redacted data.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Include commands, fixture names, and deterministic steps.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Failure evidence
+      description: Tests, tracebacks, or redacted logs.
+    validations:
+      required: true
+  - type: dropdown
+    id: risk
+    attributes:
+      label: Risk
+      options:
+        - low — local and readily reversible
+        - medium — cross-cutting or moderately consequential
+        - high — external, sensitive, or difficult to reverse
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Suspected scope and exclusions
+      description: Name likely components and anything that must not be changed.
