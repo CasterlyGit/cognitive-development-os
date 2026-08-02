@@ -1,6 +1,6 @@
 # ADR 0004: Public lineage export boundary
 
-- Status: proposed
+- Status: accepted
 - Date: 2026-08-02
 
 ## Context

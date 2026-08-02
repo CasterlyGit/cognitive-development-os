@@ -23,19 +23,18 @@ GitHub issues and pull requests remain the delivery records.
 
 | Gate | Depends on | What remains gated |
 | --- | --- | --- |
-| Retention, deletion, and archived-search policy | Local source/branch evidence | A human privacy decision before implementation |
-| Cross-project intent field | Defined opt-in scope | Evidence-backed relationship proposals and conflict decisions |
-| Live Krish or other external adapter | Internal verification and new explicit authorization | A separate capability and permission decision |
+| Issue #26: conservative private-data policy | Merged Stage 1 lineage/export | Review typed defaults and the truthful legacy-storage migration warning |
 
 ## Next
 
-1. Define and test local retention, deletion, and archived-branch search after
-   the human selects those privacy defaults.
-2. Connect branch-aware accepted-plan versions to the decision packet only after
-   a scoped review confirms the desired local interface; this must preserve the
-   no-effect boundary.
-3. Begin the opt-in multi-project intent field only after its reasoning scope is
-   explicitly chosen.
+1. Review the Stage 1E policy/audit slice without treating it as storage
+   enforcement.
+2. Separate private content from immutable structural lineage, default new raw
+   content to session-only, and provide a safe migration plan for legacy events.
+3. Connect branch-aware accepted-plan versions to the accepted decision packet
+   without enabling execution.
+4. Begin the opt-in multi-project intent field with a single-project default,
+   exact project enumeration, and evidence-backed relationship proposals.
 
 ## Deferred or rejected
 
