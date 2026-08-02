@@ -23,6 +23,10 @@ class DuplicateEventError(StoreError):
     pass
 
 
+class SourceConflictError(StoreError):
+    pass
+
+
 class StreamRevisionError(StoreError):
     def __init__(self, stream_id: str, expected: int, actual: int) -> None:
         self.stream_id = stream_id
@@ -153,20 +157,68 @@ class IntentInbox:
     ) -> SourceRecord:
         if not raw_text.strip():
             raise ValueError("raw_text must contain non-whitespace content")
+        resolved_source_id = source_id or "src_%s" % uuid4().hex
+        existing_events = [
+            event
+            for event in self.store.events_for(resolved_source_id)
+            if event.event_type == "source.captured"
+        ]
+        if len(existing_events) > 1:
+            raise SourceConflictError(
+                "source %s has duplicate capture history" % resolved_source_id
+            )
+        if existing_events:
+            existing = SourceRecord.from_dict(existing_events[0].payload)
+            expected_hash = hashlib.sha256(raw_text.encode("utf-8")).hexdigest()
+            if (
+                existing.raw_text != raw_text
+                or existing.kind != kind
+                or existing.metadata != dict(metadata or {})
+                or existing.content_sha256 != expected_hash
+            ):
+                raise SourceConflictError(
+                    "source_id %s already identifies different content"
+                    % resolved_source_id
+                )
+            return existing
         record = SourceRecord(
-            source_id=source_id or "src_%s" % uuid4().hex,
+            source_id=resolved_source_id,
             kind=kind,
             raw_text=raw_text,
             captured_at=utc_now(),
             content_sha256=hashlib.sha256(raw_text.encode("utf-8")).hexdigest(),
             metadata=dict(metadata or {}),
         )
-        self.store.append(
-            stream_id=record.source_id,
-            event_type="source.captured",
-            payload=record.to_dict(),
-        )
-        return record
+        try:
+            self.store.append(
+                stream_id=record.source_id,
+                event_type="source.captured",
+                payload=record.to_dict(),
+                expected_stream_revision=0,
+            )
+            return record
+        except StreamRevisionError:
+            raced_events = [
+                event
+                for event in self.store.events_for(resolved_source_id)
+                if event.event_type == "source.captured"
+            ]
+            if len(raced_events) != 1:
+                raise SourceConflictError(
+                    "source %s has ambiguous capture history" % resolved_source_id
+                )
+            raced = SourceRecord.from_dict(raced_events[0].payload)
+            if (
+                raced.raw_text == raw_text
+                and raced.kind == kind
+                and raced.metadata == dict(metadata or {})
+                and raced.content_sha256 == record.content_sha256
+            ):
+                return raced
+            raise SourceConflictError(
+                "source_id %s was concurrently assigned different content"
+                % resolved_source_id
+            )
 
     def sources(self) -> Iterable[SourceRecord]:
         for event in self.store.read_all():

@@ -1,0 +1,52 @@
+{
+  "run_id": "run_demo_layer5_v1",
+  "graph_id": "graph_demo_layer5",
+  "source": {
+    "source_id": "src_demo_layer5",
+    "kind": "chat",
+    "raw_text": "Maybe explore a calm intent dashboard. Build a local dry-run decision packet. Add restart verification. Do not touch Krish or external systems. Should we enable live integration later?",
+    "metadata": {
+      "fixture": "synthetic"
+    }
+  },
+  "confirmed_atom_indexes": [1, 2],
+  "confirmation": {
+    "actor_id": "demo_owner",
+    "authority": "human",
+    "channel": "synthetic_demo"
+  },
+  "dependencies": [[2, 1]],
+  "conflicts": [[2, 4]],
+  "clusters": [
+    {
+      "cluster_id": "end_to_end",
+      "label": "End-to-end dry run",
+      "member_indexes": [0, 1, 2, 3, 4]
+    }
+  ],
+  "plan": {
+    "title": "Add the end-to-end dry-run control plane",
+    "outcome": "Turn raw conversational intent into one reviewable plan and decision packet.",
+    "target_indexes": [2],
+    "owned_paths": [
+      "cognitive_os/pipeline.py",
+      "cognitive_os/cli.py",
+      "tests/test_pipeline.py"
+    ],
+    "acceptance_criteria": [
+      "Raw source, atoms, graph, plan, brief, and decision packet remain linked.",
+      "Missing human confirmation pauses before compilation.",
+      "Identical replay is idempotent after restart."
+    ],
+    "verification_steps": [
+      "python3 -m unittest -v tests.test_pipeline",
+      "python3 -m cognitive_os.cli run --manifest examples/fixtures/layer5_end_to_end.json --store /tmp/cognitive-os-demo.jsonl"
+    ],
+    "explicit_exclusions": [
+      "Do not call GitHub or Krish.",
+      "Do not execute the generated brief."
+    ],
+    "risk": "low",
+    "max_atoms": 8
+  }
+}
