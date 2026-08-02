@@ -18,21 +18,22 @@ GitHub issues and pull requests remain the delivery records.
 | Typed semantic confidence | PR #21 | Safe interpretation metadata and exploration fallback |
 | Redacted lineage export | PR #23 | Structural review packet without raw source |
 | Atomic continuity stream revision | PR #25 | Fail-closed concurrent continuity appends |
+| Conservative private-data policy | PR #28 | Private-by-default typed policy and privacy-safe legacy audit |
 
 ## Gated
 
 | Gate | Depends on | What remains gated |
 | --- | --- | --- |
-| Issue #26: conservative private-data policy | Merged Stage 1 lineage/export | Review typed defaults and the truthful legacy-storage migration warning |
+| Issue #30: session-private content boundary | Merged Stage 1E policy | Review the v2 vault/structural split without claiming legacy migration |
 
 ## Next
 
-1. Review the Stage 1E policy/audit slice without treating it as storage
-   enforcement.
-2. Separate private content from immutable structural lineage, default new raw
-   content to session-only, and provide a safe migration plan for legacy events.
-3. Connect branch-aware accepted-plan versions to the accepted decision packet
+1. Review the Stage 1F session-private lineage slice without treating it as a
+   legacy rewrite, secure erasure, or persistent vault.
+2. Connect branch-aware accepted-plan versions to the accepted decision packet
    without enabling execution.
+3. Prepare a read-only, exact-scope migration plan for legacy events; any rewrite
+   or deletion remains separately gated.
 4. Begin the opt-in multi-project intent field with a single-project default,
    exact project enumeration, and evidence-backed relationship proposals.
 

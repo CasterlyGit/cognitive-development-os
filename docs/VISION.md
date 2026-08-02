@@ -240,7 +240,8 @@ on the dependency path. **Deferred** means valuable but intentionally later.
 | Semantic extraction with confidence | **Implemented** | [PR #21](https://github.com/CasterlyGit/cognitive-development-os/pull/21) merged typed deterministic bands/scores/signals, hedged-action fallback to exploration, historical `unassessed` replay, and tests that confidence cannot confirm intent. It has no model/API inference. |
 | Redacted structural lineage export | **Implemented** | [PR #23](https://github.com/CasterlyGit/cognitive-development-os/pull/23) merged deterministic scope-specific public references after validating exact local lineage; its schema has no raw source, statement, span, metadata, timestamp, content-hash, or local-ID field. |
 | Atomic continuity stream revision | **Implemented** | [PR #25](https://github.com/CasterlyGit/cognitive-development-os/pull/25) merged exact projected-stream revision checks under the append lock, distinct-writer rejection without append, and exact-retry reconciliation. |
-| Local retention, deletion, and archived-search policy | **Implemented — review gate** | Issue #26 / Stage 1E provides session-only defaults, bounded opt-in persistence, exact archived scope, reversible quarantine planning, and a privacy-safe audit. It does not yet enforce storage migration or deletion. |
+| Local retention, deletion, and archived-search policy | **Implemented** | [PR #28](https://github.com/CasterlyGit/cognitive-development-os/pull/28) merged session-only defaults, bounded opt-in persistence policy, exact archived scope, reversible quarantine planning, and a privacy-safe audit. It does not implement deletion. |
+| Session-private content and structural lineage | **Implemented — review gate** | Issue #30 / Stage 1F adds a v2 path whose raw source and metadata stay in process-local session memory while strict digest-bound structural events survive restart. Legacy migration and secure erasure remain unimplemented. |
 | Multi-project intent field and relationship proposals | **Planned** | Requires evidence/confidence on every proposed edge and human conflict resolution. |
 | Evidence-driven worker routing and Paver runtime rail | **Planned** | Requires mocked dispatch, receipts, telemetry, and proof that routing cannot expand permission. |
 | Outcome verifier, review, observability, and lesson memory | **Planned** | Requires normalized attempts, independent evidence, retry caps, quarantine, timelines, and human-promoted lessons. |
@@ -300,13 +301,20 @@ command carries the stream revision observed with its projection into the locked
 append; a distinct concurrent change becomes a retryable stale-state result,
 while the same operation racing itself reconciles to the existing event.
 
-[Issue #26](https://github.com/CasterlyGit/cognitive-development-os/issues/26)
-implements the conservative policy/audit slice: session-only raw retention by
+[PR #28](https://github.com/CasterlyGit/cognitive-development-os/pull/28)
+merged the conservative policy/audit slice: session-only raw retention by
 default, bounded and approved local persistence, exact archived search,
 reversible exact-source quarantine planning, and single-project reasoning. Its
 legacy audit truthfully shows that the current ledger still embeds private
 fields, so Stage 1 storage enforcement remains incomplete until content is
 separated from structural lineage.
+
+[Issue #30](https://github.com/CasterlyGit/cognitive-development-os/issues/30)
+implements that separation for a new v2 path: raw source, extracted statements,
+and metadata remain in a process-local session vault while immutable events keep
+strict structural descriptors and digest bindings. It deliberately leaves the
+legacy path unchanged and does not claim migration, secure erasure, persistent
+retention, or deletion.
 
 ### Stage 2 — the multi-project intent field
 
