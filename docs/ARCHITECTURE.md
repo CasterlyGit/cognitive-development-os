@@ -5,6 +5,10 @@ intent and bounded implementation work. Krish is the eventual user-facing local
 assistant; Codex remains a bounded implementation executor. This repository does
 not modify or replace either product.
 
+The [big vision](VISION.md) defines the eventual Control Room and the status of
+each major product concept. This document describes the structure implemented or
+proposed in the repository today.
+
 ## System flow
 
 ```text
