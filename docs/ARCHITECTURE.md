@@ -13,6 +13,7 @@ proposed in the repository today.
 
 ```text
 conversation -> immutable source -> intent atoms -> intent graph
+             -> read-only branch -> explicit promotion -> accepted plan version
              -> coherent graph cut -> dry-run PR plan + execution brief
              -> decision packet -> later, explicitly approved adapters
 ```
@@ -30,8 +31,13 @@ message, or mutate another system.
 | Intent atoms and lifecycle | [#3](https://github.com/CasterlyGit/cognitive-development-os/issues/3) | implemented | Human confirmation required |
 | Intent graph | [#6](https://github.com/CasterlyGit/cognitive-development-os/issues/6) | implemented | Dependencies, conflicts, clusters |
 | PR-plan compiler | [#7](https://github.com/CasterlyGit/cognitive-development-os/issues/7) | implemented | Draft artifacts only |
-| End-to-end dry run | [#8](https://github.com/CasterlyGit/cognitive-development-os/issues/8) | planned | No external effects |
-| Krish integration proposal | [#9](https://github.com/CasterlyGit/cognitive-development-os/issues/9) | deferred | Documentation only; new authorization required |
+| End-to-end dry run | [#8](https://github.com/CasterlyGit/cognitive-development-os/issues/8) | implemented — review gate | No external effects |
+| Intent continuity, branch core | [#18](https://github.com/CasterlyGit/cognitive-development-os/issues/18) | implemented — review gate | Read-only child; human promotion only |
+| Krish integration proposal | [#9](https://github.com/CasterlyGit/cognitive-development-os/issues/9) | deferred — review gate | Documentation only; new authorization required |
+
+The lean [capability execution graph](EXECUTION_GRAPH.md) separates merged,
+review-gated, next, and deferred work without treating proposed code as active
+runtime capability.
 
 ## Durable decisions
 

@@ -235,8 +235,9 @@ on the dependency path. **Deferred** means valuable but intentionally later.
 | Dependency/conflict/cluster graph | **Implemented** | Merged Layer 3 with cycle rejection and deterministic reconstruction. |
 | Dry-run PR Compiler and bounded Codex brief | **Implemented** | Merged Layer 4; P1 draft-only and no executor invocation. |
 | End-to-end decision packet | **Implemented — review gate** | PR #13 is CI-green and open; it must be reviewed before joining `main`. |
-| Semantic extraction with confidence | **Planned** | Must fail uncertain input to exploration and never self-confirm. |
-| Cognitive branches, promotion, and plan versions | **Planned — first next execution path** | Requires isolation, lineage, supersession, stale-state, restart, and privacy tests. |
+| Cognitive branch core and immutable plan versions | **Implemented — review gate** | [PR #19](https://github.com/CasterlyGit/cognitive-development-os/pull/19) has read-only children, exact atom/source lineage, human promotion, supersession, stale-state rejection, idempotent replay, restart tests, and a synthetic demo. It is not merged or a live Sidecar. |
+| Semantic extraction with confidence | **Planned — next** | Must fail uncertain input to exploration and never self-confirm. |
+| Branch retention, redaction, export, and archived-search policy | **Planned — decision needed** | Requires local privacy tests and human choices for retention and archived-branch search defaults. |
 | Multi-project intent field and relationship proposals | **Planned** | Requires evidence/confidence on every proposed edge and human conflict resolution. |
 | Evidence-driven worker routing and Paver runtime rail | **Planned** | Requires mocked dispatch, receipts, telemetry, and proof that routing cannot expand permission. |
 | Outcome verifier, review, observability, and lesson memory | **Planned** | Requires normalized attempts, independent evidence, retry caps, quarantine, timelines, and human-promoted lessons. |
@@ -279,6 +280,12 @@ This is the **first next execution path** after the review gates:
 Acceptance requires typed models, degraded-path tests, a synthetic end-to-end
 fixture, no external effects, and a reviewable decision packet showing a branch
 that changes the proposed plan without rewriting its history.
+
+[PR #19](https://github.com/CasterlyGit/cognitive-development-os/pull/19)
+implements the first thin slice from [issue #18](https://github.com/CasterlyGit/cognitive-development-os/issues/18): the local branch, promotion, immutable
+plan-version, stale-state, replay, and restart core on a review branch. Semantic
+confidence and private-source lifecycle policy remain separate next work, so
+Stage 1 as a whole is not yet complete.
 
 ### Stage 2 — the multi-project intent field
 

@@ -13,10 +13,20 @@ This page remains the compact index of live GitHub delivery state.
 - [#6 — Living intent graph](https://github.com/CasterlyGit/cognitive-development-os/issues/6)
 - [#7 — Dry-run PR-plan compiler and execution brief](https://github.com/CasterlyGit/cognitive-development-os/issues/7)
 
-## Current sequence
+## Open review gates
 
-1. [#8 — End-to-end decision packet](https://github.com/CasterlyGit/cognitive-development-os/issues/8)
-2. [#9 — Separate Krish integration proposal](https://github.com/CasterlyGit/cognitive-development-os/issues/9), only after the dry run is robust
+1. [#8 — End-to-end decision packet](https://github.com/CasterlyGit/cognitive-development-os/issues/8) in PR #13
+2. [#16 — North-star vision](https://github.com/CasterlyGit/cognitive-development-os/issues/16) in PR #17
+3. [#9 — Separate Krish integration proposal](https://github.com/CasterlyGit/cognitive-development-os/issues/9) in PR #14, stacked on PR #13 and not authorized for integration
+
+## Next execution path
+
+1. [#18 — Stage 1A intent continuity and cognitive branch core](https://github.com/CasterlyGit/cognitive-development-os/issues/18) in [PR #19](https://github.com/CasterlyGit/cognitive-development-os/pull/19), stacked on the vision review branch but independent of PR #13/#14 runtime code
+2. Typed semantic confidence with safe exploration fallback
+3. Local retention, redaction, export, and archived-branch policy after the named human defaults are settled
+
+The [capability execution graph](EXECUTION_GRAPH.md) records dependencies and
+the precise boundary between these review gates and later stages.
 
 ## Workflow
 
