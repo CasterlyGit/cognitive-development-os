@@ -22,7 +22,7 @@ GitHub issues and pull requests remain the delivery records.
 | PR #19 / issue #18: branch continuity core | Merged Layers 1–4; stacked only for the PR #17 document | Read-only child branches, explicit promotion, immutable plan versions |
 | PR #21 / issue #20: typed semantic confidence | Layer 2; stacked on Stage 1A for linear review | Confidence evidence, hedged-action fallback, historical replay compatibility |
 | PR #23 / issue #22: redacted lineage export | Stage 1A and 1B typed state | Structural public review packet with scoped pseudonymous references and no raw fields |
-| Issue #24 review branch: stream-revision atomicity | Stage 1A continuity aggregate | Local compare-and-append, distinct-writer rejection, exact retry reconciliation |
+| PR #25 / issue #24: stream-revision atomicity | Stage 1A continuity aggregate | Local compare-and-append, distinct-writer rejection, exact retry reconciliation |
 | PR #14: disabled Krish contract proposal | PR #13 | Contract review only; no integration authority |
 
 ## Next
