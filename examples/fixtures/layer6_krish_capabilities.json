@@ -1,0 +1,9 @@
+{
+  "accepted_contract_major": 1,
+  "merge_policy": "unknown",
+  "issue_creation_separate_from_queueing": false,
+  "supports_idempotency": false,
+  "supports_state_reconciliation": false,
+  "os_merge_capability_exposed": true,
+  "human_authorized_live_integration": false
+}

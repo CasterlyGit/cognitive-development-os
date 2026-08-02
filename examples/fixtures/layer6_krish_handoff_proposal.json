@@ -1,0 +1,20 @@
+{
+  "contract_version": "1.0",
+  "handoff_id": "handoff_demo_layer6",
+  "idempotency_key": "sha256:68c89bb83ab869cefdd225fb17c369f2034d7cacc5b42e23985908f96cee91d9",
+  "intent_id": "intent_demo_layer6",
+  "plan_id": "plan_demo_layer6",
+  "plan_digest": "sha256:synthetic-plan-digest",
+  "target_system": "krish",
+  "target_project": "krish",
+  "action": "draft_issue_proposal",
+  "outcome": "Propose a bounded local status-query subsystem story.",
+  "owned_paths": ["Sources/StatusQuery", "Tests/StatusQueryTests"],
+  "acceptance_criteria": ["The proposal contains exact scope and evidence."],
+  "exclusions": ["Do not create an issue.", "Do not queue an executor.", "Do not merge."],
+  "evidence_contract": ["Validate the draft against contract v1."],
+  "risk": "medium",
+  "permission_class": "P1_draft_only",
+  "approval_receipt_id": null,
+  "required_merge_policy": "human_only"
+}

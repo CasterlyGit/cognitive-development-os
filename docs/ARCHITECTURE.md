@@ -36,7 +36,7 @@ message, or mutate another system.
 | Typed semantic confidence | [#20](https://github.com/CasterlyGit/cognitive-development-os/issues/20) | implemented | Interpretation evidence only; uncertain action becomes exploration |
 | Redacted structural lineage export | [#22](https://github.com/CasterlyGit/cognitive-development-os/issues/22) | implemented | Pseudonymous references; raw source is schema-impossible |
 | Atomic continuity stream revision | [#24](https://github.com/CasterlyGit/cognitive-development-os/issues/24) | implemented | Compare-and-append under the local ledger lock |
-| Krish integration proposal | [#9](https://github.com/CasterlyGit/cognitive-development-os/issues/9) | deferred — review gate | Documentation only; new authorization required |
+| Krish integration proposal | [#9](https://github.com/CasterlyGit/cognitive-development-os/issues/9) | contract implemented; integration deferred | Offline contract only; live path disabled |
 
 The lean [capability execution graph](EXECUTION_GRAPH.md) separates merged,
 review-gated, next, and deferred work without treating proposed code as active
