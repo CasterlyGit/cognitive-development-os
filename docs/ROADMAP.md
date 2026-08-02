@@ -21,18 +21,17 @@ This page remains the compact index of live GitHub delivery state.
 - [#24 — Atomic continuity stream revisions](https://github.com/CasterlyGit/cognitive-development-os/issues/24)
 - [#26 — Conservative private-data and reasoning-scope defaults](https://github.com/CasterlyGit/cognitive-development-os/issues/26)
 - [#30 — Session-private content and structural lineage](https://github.com/CasterlyGit/cognitive-development-os/issues/30)
+- [#32 — Accepted-plan-bound decision packet](https://github.com/CasterlyGit/cognitive-development-os/issues/32)
 
 ## Open review gates
 
-1. [#32 — Accepted-plan-bound decision packet](https://github.com/CasterlyGit/cognitive-development-os/issues/32), pure local compile; no execution
+1. [#34 — Exact legacy migration planning](https://github.com/CasterlyGit/cognitive-development-os/issues/34), redacted plan only; no mutation
 
 ## Next execution path
 
-1. Review the accepted-plan packet bridge without treating a draft as execution
-   permission or outcome evidence.
-2. Prepare a read-only, exact-scope legacy migration plan without rewriting or
-   deleting events.
-3. Add the opt-in, project-scoped intent field with evidence-backed relationship
+1. Review the legacy migration plan without treating it as rewrite, quarantine,
+   deletion, or migration authority.
+2. Add the opt-in, project-scoped intent field with evidence-backed relationship
    proposals after the private storage boundary is proven.
 
 The [capability execution graph](EXECUTION_GRAPH.md) records dependencies and

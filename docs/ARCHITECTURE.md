@@ -38,7 +38,8 @@ message, or mutate another system.
 | Atomic continuity stream revision | [#24](https://github.com/CasterlyGit/cognitive-development-os/issues/24) | implemented | Compare-and-append under the local ledger lock |
 | Private-data and reasoning defaults | [#26](https://github.com/CasterlyGit/cognitive-development-os/issues/26) | implemented | Policy/audit only; legacy embedded data requires migration |
 | Session-private content and structural lineage | [#30](https://github.com/CasterlyGit/cognitive-development-os/issues/30) | implemented | v2 path only; legacy data is unchanged |
-| Accepted-plan-bound decision packet | [#32](https://github.com/CasterlyGit/cognitive-development-os/issues/32) | implemented — review gate | Pure local compile; no event writes or execution |
+| Accepted-plan-bound decision packet | [#32](https://github.com/CasterlyGit/cognitive-development-os/issues/32) | implemented | Pure local compile; no event writes or execution |
+| Exact legacy migration planning | [#34](https://github.com/CasterlyGit/cognitive-development-os/issues/34) | implemented — review gate | Redacted plan only; mutation prerequisites remain gated |
 | Krish integration proposal | [#9](https://github.com/CasterlyGit/cognitive-development-os/issues/9) | contract implemented; integration deferred | Offline contract only; live path disabled |
 
 The lean [capability execution graph](EXECUTION_GRAPH.md) separates merged,

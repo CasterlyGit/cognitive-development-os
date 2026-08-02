@@ -1,0 +1,15 @@
+{
+  "home_project_id": "cognitive-development-os",
+  "graph_id": "graph_demo_stage1h",
+  "source": {
+    "source_id": "source_demo_legacy_scoped",
+    "raw_text": "Build a synthetic legacy migration plan. Do not execute it. SYNTHETIC_PRIVATE_SOURCE",
+    "metadata": {
+      "fixture_class": "SYNTHETIC_PRIVATE_METADATA"
+    }
+  },
+  "unscoped_source": {
+    "source_id": "source_demo_legacy_unscoped",
+    "raw_text": "Synthetic unscoped legacy source."
+  }
+}
