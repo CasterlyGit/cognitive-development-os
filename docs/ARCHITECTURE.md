@@ -5,10 +5,15 @@ intent and bounded implementation work. Krish is the eventual user-facing local
 assistant; Codex remains a bounded implementation executor. This repository does
 not modify or replace either product.
 
+The [big vision](VISION.md) defines the eventual Control Room and the status of
+each major product concept. This document describes the structure implemented or
+proposed in the repository today.
+
 ## System flow
 
 ```text
 conversation -> immutable source -> intent atoms -> intent graph
+             -> read-only branch -> explicit promotion -> accepted plan version
              -> coherent graph cut -> dry-run PR plan + execution brief
              -> decision packet -> later, explicitly approved adapters
 ```
@@ -27,7 +32,15 @@ message, or mutate another system.
 | Intent graph | [#6](https://github.com/CasterlyGit/cognitive-development-os/issues/6) | implemented | Dependencies, conflicts, clusters |
 | PR-plan compiler | [#7](https://github.com/CasterlyGit/cognitive-development-os/issues/7) | implemented | Draft artifacts only |
 | End-to-end dry run | [#8](https://github.com/CasterlyGit/cognitive-development-os/issues/8) | implemented | No external effects |
-| Krish integration proposal | [#9](https://github.com/CasterlyGit/cognitive-development-os/issues/9) | review proposal | Offline contract only; live path disabled |
+| Intent continuity, branch core | [#18](https://github.com/CasterlyGit/cognitive-development-os/issues/18) | implemented | Read-only child; human promotion only |
+| Typed semantic confidence | [#20](https://github.com/CasterlyGit/cognitive-development-os/issues/20) | implemented | Interpretation evidence only; uncertain action becomes exploration |
+| Redacted structural lineage export | [#22](https://github.com/CasterlyGit/cognitive-development-os/issues/22) | implemented | Pseudonymous references; raw source is schema-impossible |
+| Atomic continuity stream revision | [#24](https://github.com/CasterlyGit/cognitive-development-os/issues/24) | implemented | Compare-and-append under the local ledger lock |
+| Krish integration proposal | [#9](https://github.com/CasterlyGit/cognitive-development-os/issues/9) | contract implemented; integration deferred | Offline contract only; live path disabled |
+
+The lean [capability execution graph](EXECUTION_GRAPH.md) separates merged,
+review-gated, next, and deferred work without treating proposed code as active
+runtime capability.
 
 ## Durable decisions
 

@@ -4,6 +4,7 @@ from pathlib import Path
 import unittest
 
 from cognitive_os.integration_contract import (
+    IntegrationContractError,
     KrishCapabilities,
     KrishHandoffProposal,
     assess_live_readiness,
@@ -75,6 +76,34 @@ class KrishIntegrationProposalTests(unittest.TestCase):
         fixture = json.loads(PROPOSAL_PATH.read_text(encoding="utf-8"))
         self.assertEqual(set(schema["required"]), set(fixture))
         self.assertFalse(schema["additionalProperties"])
+
+    def test_proposal_parser_rejects_scalar_arrays_and_non_string_fields(self):
+        fixture = json.loads(PROPOSAL_PATH.read_text(encoding="utf-8"))
+        for field, invalid in (
+            ("owned_paths", "Sources/App.swift"),
+            ("acceptance_criteria", "looks good"),
+            ("plan_id", 7),
+            ("approval_receipt_id", True),
+        ):
+            with self.subTest(field=field):
+                changed = dict(fixture)
+                changed[field] = invalid
+                with self.assertRaises(IntegrationContractError):
+                    KrishHandoffProposal.from_dict(changed)
+
+    def test_capability_parser_rejects_truthy_strings_and_boolean_integers(self):
+        fixture = json.loads(CAPABILITIES_PATH.read_text(encoding="utf-8"))
+        for field, invalid in (
+            ("supports_idempotency", "false"),
+            ("os_merge_capability_exposed", 0),
+            ("accepted_contract_major", True),
+            ("merge_policy", False),
+        ):
+            with self.subTest(field=field):
+                changed = dict(fixture)
+                changed[field] = invalid
+                with self.assertRaises(IntegrationContractError):
+                    KrishCapabilities.from_dict(changed)
 
     def test_current_capabilities_keep_live_integration_blocked(self):
         capabilities = KrishCapabilities.from_dict(

@@ -1,3 +1,4 @@
+import hashlib
 import json
 from pathlib import Path
 from tempfile import TemporaryDirectory
@@ -10,6 +11,7 @@ from cognitive_os.store import (
     DuplicateEventError,
     IntentInbox,
     SourceConflictError,
+    StreamRevisionError,
 )
 
 
@@ -71,6 +73,84 @@ class IntentInboxTests(unittest.TestCase):
         with self.assertRaises(SourceConflictError):
             self.inbox.capture("Changed synthetic intent.", source_id="stable")
         self.assertEqual(1, len(self.store.read_all()))
+
+    def test_exact_racing_source_capture_reconciles_to_one_event(self):
+        original_append = self.store.append
+        injected = False
+
+        def append_with_exact_race(stream_id, event_type, payload, **kwargs):
+            nonlocal injected
+            if stream_id == "stable" and not injected:
+                injected = True
+                original_append(
+                    stream_id,
+                    event_type,
+                    payload,
+                    expected_stream_revision=0,
+                )
+            return original_append(stream_id, event_type, payload, **kwargs)
+
+        self.store.append = append_with_exact_race
+        captured = self.inbox.capture("Synthetic intent.", source_id="stable")
+        self.assertEqual("Synthetic intent.", captured.raw_text)
+        self.assertEqual(1, len(self.store.read_all()))
+
+    def test_distinct_racing_source_capture_fails_closed(self):
+        original_append = self.store.append
+        injected = False
+
+        def append_with_distinct_race(stream_id, event_type, payload, **kwargs):
+            nonlocal injected
+            if stream_id == "stable" and not injected:
+                injected = True
+                different = dict(payload)
+                different["raw_text"] = "Different synthetic intent."
+                different["content_sha256"] = hashlib.sha256(
+                    different["raw_text"].encode("utf-8")
+                ).hexdigest()
+                original_append(
+                    stream_id,
+                    event_type,
+                    different,
+                    expected_stream_revision=0,
+                )
+            return original_append(stream_id, event_type, payload, **kwargs)
+
+        self.store.append = append_with_distinct_race
+        with self.assertRaises(SourceConflictError):
+            self.inbox.capture("Synthetic intent.", source_id="stable")
+        self.assertEqual(1, len(self.store.read_all()))
+
+    def test_expected_stream_revision_is_checked_under_append_lock(self):
+        self.store.append("target", "one", {}, expected_stream_revision=0)
+        before = len(self.store.read_all())
+        with self.assertRaisesRegex(StreamRevisionError, "expected 0, actual 1"):
+            self.store.append("target", "stale", {}, expected_stream_revision=0)
+        self.assertEqual(before, len(self.store.read_all()))
+        second = self.store.append(
+            "target", "two", {}, expected_stream_revision=1
+        )
+        self.assertEqual("two", second.event_type)
+
+    def test_stream_revision_ignores_unrelated_streams(self):
+        self.store.append("other", "one", {})
+        event = self.store.append(
+            "target", "first", {}, expected_stream_revision=0
+        )
+        self.assertEqual("target", event.stream_id)
+
+    def test_invalid_expected_stream_revision_is_rejected_without_write(self):
+        for invalid in (-1, 1.5, True, "0"):
+            with self.subTest(invalid=invalid):
+                before = len(self.store.read_all())
+                with self.assertRaises(ValueError):
+                    self.store.append(
+                        "target",
+                        "invalid",
+                        {},
+                        expected_stream_revision=invalid,
+                    )
+                self.assertEqual(before, len(self.store.read_all()))
 
 
 if __name__ == "__main__":

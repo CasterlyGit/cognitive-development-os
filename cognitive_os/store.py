@@ -27,6 +27,17 @@ class SourceConflictError(StoreError):
     pass
 
 
+class StreamRevisionError(StoreError):
+    def __init__(self, stream_id: str, expected: int, actual: int) -> None:
+        self.stream_id = stream_id
+        self.expected = expected
+        self.actual = actual
+        super().__init__(
+            "stream %s revision changed: expected %d, actual %d"
+            % (stream_id, expected, actual)
+        )
+
+
 class AppendOnlyEventStore:
     """A single-file JSONL ledger with process-safe, fsynced appends."""
 
@@ -39,24 +50,28 @@ class AppendOnlyEventStore:
         events: List[Event] = []
         seen_ids = set()
         with self.path.open("r", encoding="utf-8") as handle:
-            for line_number, line in enumerate(handle, start=1):
-                if not line.strip():
-                    raise CorruptStoreError("blank ledger line at %d" % line_number)
-                try:
-                    event = Event.from_dict(json.loads(line))
-                except (KeyError, TypeError, ValueError, json.JSONDecodeError) as exc:
-                    raise CorruptStoreError(
-                        "invalid ledger event at line %d: %s" % (line_number, exc)
-                    ) from exc
-                if event.sequence != line_number:
-                    raise CorruptStoreError(
-                        "non-monotonic sequence at line %d: got %d"
-                        % (line_number, event.sequence)
-                    )
-                if event.event_id in seen_ids:
-                    raise CorruptStoreError("duplicate event_id %s" % event.event_id)
-                seen_ids.add(event.event_id)
-                events.append(event)
+            fcntl.flock(handle.fileno(), fcntl.LOCK_SH)
+            try:
+                for line_number, line in enumerate(handle, start=1):
+                    if not line.strip():
+                        raise CorruptStoreError("blank ledger line at %d" % line_number)
+                    try:
+                        event = Event.from_dict(json.loads(line))
+                    except (KeyError, TypeError, ValueError, json.JSONDecodeError) as exc:
+                        raise CorruptStoreError(
+                            "invalid ledger event at line %d: %s" % (line_number, exc)
+                        ) from exc
+                    if event.sequence != line_number:
+                        raise CorruptStoreError(
+                            "non-monotonic sequence at line %d: got %d"
+                            % (line_number, event.sequence)
+                        )
+                    if event.event_id in seen_ids:
+                        raise CorruptStoreError("duplicate event_id %s" % event.event_id)
+                    seen_ids.add(event.event_id)
+                    events.append(event)
+            finally:
+                fcntl.flock(handle.fileno(), fcntl.LOCK_UN)
         return events
 
     def append(
@@ -67,9 +82,16 @@ class AppendOnlyEventStore:
         *,
         event_id: Optional[str] = None,
         causation_id: Optional[str] = None,
+        expected_stream_revision: Optional[int] = None,
     ) -> Event:
         if not stream_id.strip() or not event_type.strip():
             raise ValueError("stream_id and event_type must be non-empty")
+        if expected_stream_revision is not None and (
+            isinstance(expected_stream_revision, bool)
+            or not isinstance(expected_stream_revision, int)
+            or expected_stream_revision < 0
+        ):
+            raise ValueError("expected_stream_revision must be a non-negative integer")
         self.path.parent.mkdir(parents=True, exist_ok=True)
         resolved_event_id = event_id or str(uuid4())
         with self.path.open("a+", encoding="utf-8") as handle:
@@ -88,6 +110,16 @@ class AppendOnlyEventStore:
                     if parsed.sequence != index:
                         raise CorruptStoreError("cannot append after invalid sequence")
                     existing.append(parsed)
+                if expected_stream_revision is not None:
+                    actual_stream_revision = sum(
+                        item.stream_id == stream_id for item in existing
+                    )
+                    if actual_stream_revision != expected_stream_revision:
+                        raise StreamRevisionError(
+                            stream_id,
+                            expected_stream_revision,
+                            actual_stream_revision,
+                        )
                 if any(item.event_id == resolved_event_id for item in existing):
                     raise DuplicateEventError(resolved_event_id)
                 event = Event(
@@ -157,12 +189,36 @@ class IntentInbox:
             content_sha256=hashlib.sha256(raw_text.encode("utf-8")).hexdigest(),
             metadata=dict(metadata or {}),
         )
-        self.store.append(
-            stream_id=record.source_id,
-            event_type="source.captured",
-            payload=record.to_dict(),
-        )
-        return record
+        try:
+            self.store.append(
+                stream_id=record.source_id,
+                event_type="source.captured",
+                payload=record.to_dict(),
+                expected_stream_revision=0,
+            )
+            return record
+        except StreamRevisionError:
+            raced_events = [
+                event
+                for event in self.store.events_for(resolved_source_id)
+                if event.event_type == "source.captured"
+            ]
+            if len(raced_events) != 1:
+                raise SourceConflictError(
+                    "source %s has ambiguous capture history" % resolved_source_id
+                )
+            raced = SourceRecord.from_dict(raced_events[0].payload)
+            if (
+                raced.raw_text == raw_text
+                and raced.kind == kind
+                and raced.metadata == dict(metadata or {})
+                and raced.content_sha256 == record.content_sha256
+            ):
+                return raced
+            raise SourceConflictError(
+                "source_id %s was concurrently assigned different content"
+                % resolved_source_id
+            )
 
     def sources(self) -> Iterable[SourceRecord]:
         for event in self.store.read_all():

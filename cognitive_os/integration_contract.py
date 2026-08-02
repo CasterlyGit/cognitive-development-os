@@ -11,6 +11,29 @@ class IntegrationContractError(RuntimeError):
     pass
 
 
+def _required_string(value: Dict[str, Any], field: str) -> str:
+    resolved = value[field]
+    if not isinstance(resolved, str):
+        raise TypeError("%s must be a string" % field)
+    return resolved
+
+
+def _required_string_tuple(value: Dict[str, Any], field: str) -> Tuple[str, ...]:
+    resolved = value[field]
+    if not isinstance(resolved, list) or any(
+        not isinstance(item, str) for item in resolved
+    ):
+        raise TypeError("%s must be an array of strings" % field)
+    return tuple(resolved)
+
+
+def _required_bool(value: Dict[str, Any], field: str) -> bool:
+    resolved = value[field]
+    if not isinstance(resolved, bool):
+        raise TypeError("%s must be a boolean" % field)
+    return resolved
+
+
 @dataclass(frozen=True)
 class KrishHandoffProposal:
     contract_version: str
@@ -35,25 +58,36 @@ class KrishHandoffProposal:
     @classmethod
     def from_dict(cls, value: Dict[str, Any]) -> "KrishHandoffProposal":
         try:
+            approval_receipt_id = value.get("approval_receipt_id")
+            if approval_receipt_id is not None and not isinstance(
+                approval_receipt_id, str
+            ):
+                raise TypeError("approval_receipt_id must be a string or null")
             return cls(
-                contract_version=value["contract_version"],
-                handoff_id=value["handoff_id"],
-                idempotency_key=value["idempotency_key"],
-                intent_id=value["intent_id"],
-                plan_id=value["plan_id"],
-                plan_digest=value["plan_digest"],
-                target_system=value["target_system"],
-                target_project=value["target_project"],
-                action=value["action"],
-                outcome=value["outcome"],
-                owned_paths=tuple(value["owned_paths"]),
-                acceptance_criteria=tuple(value["acceptance_criteria"]),
-                exclusions=tuple(value["exclusions"]),
-                evidence_contract=tuple(value["evidence_contract"]),
-                risk=value["risk"],
-                permission_class=value["permission_class"],
-                approval_receipt_id=value.get("approval_receipt_id"),
-                required_merge_policy=value["required_merge_policy"],
+                contract_version=_required_string(value, "contract_version"),
+                handoff_id=_required_string(value, "handoff_id"),
+                idempotency_key=_required_string(value, "idempotency_key"),
+                intent_id=_required_string(value, "intent_id"),
+                plan_id=_required_string(value, "plan_id"),
+                plan_digest=_required_string(value, "plan_digest"),
+                target_system=_required_string(value, "target_system"),
+                target_project=_required_string(value, "target_project"),
+                action=_required_string(value, "action"),
+                outcome=_required_string(value, "outcome"),
+                owned_paths=_required_string_tuple(value, "owned_paths"),
+                acceptance_criteria=_required_string_tuple(
+                    value, "acceptance_criteria"
+                ),
+                exclusions=_required_string_tuple(value, "exclusions"),
+                evidence_contract=_required_string_tuple(
+                    value, "evidence_contract"
+                ),
+                risk=_required_string(value, "risk"),
+                permission_class=_required_string(value, "permission_class"),
+                approval_receipt_id=approval_receipt_id,
+                required_merge_policy=_required_string(
+                    value, "required_merge_policy"
+                ),
             )
         except (KeyError, TypeError, ValueError) as exc:
             raise IntegrationContractError("invalid handoff proposal: %s" % exc) from exc
@@ -96,19 +130,26 @@ class KrishCapabilities:
     @classmethod
     def from_dict(cls, value: Dict[str, Any]) -> "KrishCapabilities":
         try:
+            accepted_contract_major = value["accepted_contract_major"]
+            if isinstance(accepted_contract_major, bool) or not isinstance(
+                accepted_contract_major, int
+            ):
+                raise TypeError("accepted_contract_major must be an integer")
             return cls(
-                accepted_contract_major=int(value["accepted_contract_major"]),
-                merge_policy=value["merge_policy"],
-                issue_creation_separate_from_queueing=bool(
-                    value["issue_creation_separate_from_queueing"]
+                accepted_contract_major=accepted_contract_major,
+                merge_policy=_required_string(value, "merge_policy"),
+                issue_creation_separate_from_queueing=_required_bool(
+                    value, "issue_creation_separate_from_queueing"
                 ),
-                supports_idempotency=bool(value["supports_idempotency"]),
-                supports_state_reconciliation=bool(
-                    value["supports_state_reconciliation"]
+                supports_idempotency=_required_bool(value, "supports_idempotency"),
+                supports_state_reconciliation=_required_bool(
+                    value, "supports_state_reconciliation"
                 ),
-                os_merge_capability_exposed=bool(value["os_merge_capability_exposed"]),
-                human_authorized_live_integration=bool(
-                    value["human_authorized_live_integration"]
+                os_merge_capability_exposed=_required_bool(
+                    value, "os_merge_capability_exposed"
+                ),
+                human_authorized_live_integration=_required_bool(
+                    value, "human_authorized_live_integration"
                 ),
             )
         except (KeyError, TypeError, ValueError) as exc:
