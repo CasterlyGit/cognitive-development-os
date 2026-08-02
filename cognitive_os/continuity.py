@@ -9,7 +9,7 @@ from typing import Any, Dict, Iterable, Optional, Tuple
 from .graph import GraphSnapshot
 from .intents import AtomState, ConfirmationAuthority, ConfirmationRecord
 from .models import Event
-from .store import AppendOnlyEventStore, DuplicateEventError
+from .store import AppendOnlyEventStore, DuplicateEventError, StreamRevisionError
 
 
 class ContinuityError(RuntimeError):
@@ -171,10 +171,15 @@ class IntentContinuity:
         self.store = store
 
     def snapshot(self) -> ContinuitySnapshot:
+        snapshot, _ = self._snapshot_with_revision()
+        return snapshot
+
+    def _snapshot_with_revision(self) -> Tuple[ContinuitySnapshot, int]:
+        events = self.store.events_for(self.continuity_id)
         branches: Dict[str, CognitiveBranch] = {}
         versions: Dict[str, IntentPlanVersion] = {}
         current_plan_ids: Dict[str, str] = {}
-        for event in self.store.events_for(self.continuity_id):
+        for event in events:
             if event.event_type == "continuity.root_initialized":
                 if branches or versions:
                     raise ContinuityError("root initialization must be the first event")
@@ -220,11 +225,14 @@ class IntentContinuity:
                 )
         if not branches and (versions or current_plan_ids):
             raise ContinuityError("continuity history has no root")
-        return ContinuitySnapshot(
-            continuity_id=self.continuity_id,
-            branches=branches,
-            plan_versions=versions,
-            current_plan_ids=current_plan_ids,
+        return (
+            ContinuitySnapshot(
+                continuity_id=self.continuity_id,
+                branches=branches,
+                plan_versions=versions,
+                current_plan_ids=current_plan_ids,
+            ),
+            len(events),
         )
 
     def initialize_root(
@@ -243,7 +251,8 @@ class IntentContinuity:
         replay = self._replayed(operation_id, "continuity.root_initialized", request)
         if replay:
             return self.snapshot()
-        if self.snapshot().branches:
+        current, stream_revision = self._snapshot_with_revision()
+        if current.branches:
             raise ContinuityError("continuity root is already initialized")
         self._require_identifier(branch_id, "branch_id")
         self._validate_accepted_atoms(graph, ordered_atom_ids)
@@ -273,6 +282,7 @@ class IntentContinuity:
             "continuity.root_initialized",
             request,
             {"branch": branch.to_dict(), "plan_version": version.to_dict()},
+            expected_stream_revision=stream_revision,
         )
         return self.snapshot()
 
@@ -299,7 +309,7 @@ class IntentContinuity:
         if replay:
             return self.snapshot()
         self._require_identifier(branch_id, "branch_id")
-        snapshot = self.snapshot()
+        snapshot, stream_revision = self._snapshot_with_revision()
         if branch_id in snapshot.branches:
             raise ContinuityError("branch %s already exists" % branch_id)
         parent = snapshot.branches.get(parent_branch_id)
@@ -336,6 +346,7 @@ class IntentContinuity:
             "branch.opened",
             request,
             {"branch": branch.to_dict()},
+            expected_stream_revision=stream_revision,
             causation_id=current_plan.plan_version_id,
         )
         return self.snapshot()
@@ -352,7 +363,7 @@ class IntentContinuity:
         replay = self._replayed(operation_id, "branch.atom_proposed", request)
         if replay:
             return self.snapshot()
-        snapshot = self.snapshot()
+        snapshot, stream_revision = self._snapshot_with_revision()
         branch = self._active_child(branch_id, snapshot.branches)
         if atom_id not in graph.atoms:
             raise ContinuityError("proposal references missing atom %s" % atom_id)
@@ -368,6 +379,7 @@ class IntentContinuity:
             "branch.atom_proposed",
             request,
             {"branch_id": branch_id, "proposal": proposal.to_dict()},
+            expected_stream_revision=stream_revision,
             causation_id=branch.base_plan_version_id,
         )
         return self.snapshot()
@@ -396,7 +408,7 @@ class IntentContinuity:
         if replay:
             return self.snapshot()
         self._require_human(confirmation)
-        snapshot = self.snapshot()
+        snapshot, stream_revision = self._snapshot_with_revision()
         branch = self._active_child(branch_id, snapshot.branches)
         if branch.parent_branch_id is None:
             raise ContinuityError("root branch cannot be promoted")
@@ -438,6 +450,7 @@ class IntentContinuity:
                 "confirmation": confirmation.to_dict(),
                 "plan_version": version.to_dict(),
             },
+            expected_stream_revision=stream_revision,
             causation_id=branch.base_plan_version_id,
         )
         return self.snapshot()
@@ -479,12 +492,14 @@ class IntentContinuity:
             return self.snapshot()
         if not actor_id.strip() or not reason.strip():
             raise ContinuityError("branch closure requires actor and reason")
-        branch = self._active_child(branch_id, self.snapshot().branches)
+        snapshot, stream_revision = self._snapshot_with_revision()
+        branch = self._active_child(branch_id, snapshot.branches)
         self._append_operation(
             operation_id,
             event_type,
             request,
             {"branch_id": branch_id, "actor_id": actor_id, "reason": reason},
+            expected_stream_revision=stream_revision,
             causation_id=branch.base_plan_version_id,
         )
         return self.snapshot()
@@ -657,6 +672,7 @@ class IntentContinuity:
         request: Dict[str, Any],
         payload: Dict[str, Any],
         *,
+        expected_stream_revision: int,
         causation_id: Optional[str] = None,
     ) -> Event:
         value = dict(payload)
@@ -669,12 +685,20 @@ class IntentContinuity:
                 value,
                 event_id=self._operation_event_id(operation_id),
                 causation_id=causation_id,
+                expected_stream_revision=expected_stream_revision,
             )
         except DuplicateEventError:
             replayed = self._replayed(operation_id, event_type, request)
             if replayed is None:
                 raise ContinuityError("operation replay could not be reconciled")
             return replayed
+        except StreamRevisionError as exc:
+            replayed = self._replayed(operation_id, event_type, request)
+            if replayed is not None:
+                return replayed
+            raise ContinuityError(
+                "continuity changed during append; retry from fresh state"
+            ) from exc
 
     def _operation_event_id(self, operation_id: str) -> str:
         return "continuity_op_%s" % self._digest(

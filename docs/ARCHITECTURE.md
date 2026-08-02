@@ -35,6 +35,7 @@ message, or mutate another system.
 | Intent continuity, branch core | [#18](https://github.com/CasterlyGit/cognitive-development-os/issues/18) | implemented — review gate | Read-only child; human promotion only |
 | Typed semantic confidence | [#20](https://github.com/CasterlyGit/cognitive-development-os/issues/20) | implemented — review gate | Interpretation evidence only; uncertain action becomes exploration |
 | Redacted structural lineage export | [#22](https://github.com/CasterlyGit/cognitive-development-os/issues/22) | implemented — review gate | Pseudonymous references; raw source is schema-impossible |
+| Atomic continuity stream revision | [#24](https://github.com/CasterlyGit/cognitive-development-os/issues/24) | implemented — review gate | Compare-and-append under the local ledger lock |
 | Krish integration proposal | [#9](https://github.com/CasterlyGit/cognitive-development-os/issues/9) | deferred — review gate | Documentation only; new authorization required |
 
 The lean [capability execution graph](EXECUTION_GRAPH.md) separates merged,

@@ -16,6 +16,7 @@ python3 -m unittest discover -v
 python3 -m examples.stage1a_intent_continuity_demo
 python3 -m examples.stage1b_semantic_confidence_demo
 python3 -m examples.stage1c_redacted_lineage_demo
+python3 -m examples.stage1d_stream_revision_demo
 ```
 
 Implementation proceeds as independently reviewable layers. Reports and proof
@@ -44,6 +45,10 @@ explicitly unassessed, and confidence never confirms intent or grants authority.
 The Stage 1C review branch can render branch and plan lineage as a structural
 public packet with scope-specific pseudonymous references. Its schema has no raw
 source, statement, span, metadata, timestamp, content-hash, or local-ID field.
+
+The Stage 1D review branch ties every continuity command to the exact stream
+revision it projected, so a distinct concurrent writer fails the pending append
+without poisoning history while an exact racing retry reconciles idempotently.
 
 ## License
 

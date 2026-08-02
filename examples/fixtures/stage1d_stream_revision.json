@@ -1,0 +1,8 @@
+{
+  "target_stream": "continuity_demo_stream",
+  "unrelated_stream": "graph_demo_stream",
+  "first_event": "continuity.initialized",
+  "unrelated_event": "graph.observed",
+  "stale_event": "continuity.stale_write",
+  "next_event": "continuity.next_write"
+}
