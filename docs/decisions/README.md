@@ -7,6 +7,7 @@ may supersede one while preserving its provenance.
 | ADR | Status | Decision |
 |---|---|---|
 | [0001](0001-dry-run-control-plane-boundary.md) | accepted | Keep the initial control plane local and dry-run only |
+| [0002](0002-krish-integration-gates.md) | proposed | Gate any future Krish integration behind versioning, reconciliation, approvals, and human-only merge |
 
 ## Record template
 
