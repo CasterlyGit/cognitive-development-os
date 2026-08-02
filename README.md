@@ -9,6 +9,15 @@ The current implementation is an early dry-run prototype. It performs no
 network calls, starts no background services, does not integrate with Krish,
 and cannot merge or deploy anything.
 
+## Setup
+
+Use Python 3.9 or newer. The runtime has no dependency outside the standard
+library:
+
+```bash
+python3 -m pip install -e .
+```
+
 ## Project Decision Loop MVP
 
 The smallest end-to-end product surface is a local CLI loop for exactly two
