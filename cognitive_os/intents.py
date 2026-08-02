@@ -2,9 +2,9 @@ from __future__ import annotations
 
 from dataclasses import asdict, dataclass, replace
 from enum import Enum
+import hashlib
 import re
 from typing import Any, Dict, Iterable, List
-from uuid import uuid4
 
 from .models import Event, SourceRecord
 from .store import AppendOnlyEventStore
@@ -114,7 +114,12 @@ class IntentExtractor:
             confirmation = kind in (AtomKind.ACTIONABLE, AtomKind.DECISION_REQUEST)
             atoms.append(
                 IntentAtom(
-                    atom_id="atom_%s" % uuid4().hex,
+                    atom_id="atom_%s"
+                    % hashlib.sha256(
+                        ("%s:%d:%d:%s" % (source.source_id, start, end, statement)).encode(
+                            "utf-8"
+                        )
+                    ).hexdigest()[:24],
                     source_id=source.source_id,
                     kind=kind,
                     statement=statement,

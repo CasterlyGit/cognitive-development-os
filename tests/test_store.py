@@ -9,6 +9,7 @@ from cognitive_os.store import (
     CorruptStoreError,
     DuplicateEventError,
     IntentInbox,
+    SourceConflictError,
 )
 
 
@@ -58,6 +59,18 @@ class IntentInboxTests(unittest.TestCase):
         self.path.write_text(json.dumps(value) + "\n", encoding="utf-8")
         with self.assertRaises(CorruptStoreError):
             self.store.read_all()
+
+    def test_same_source_capture_is_idempotent(self):
+        first = self.inbox.capture("Synthetic intent.", source_id="stable")
+        second = self.inbox.capture("Synthetic intent.", source_id="stable")
+        self.assertEqual(first, second)
+        self.assertEqual(1, len(self.store.read_all()))
+
+    def test_source_id_cannot_be_reused_for_different_content(self):
+        self.inbox.capture("First synthetic intent.", source_id="stable")
+        with self.assertRaises(SourceConflictError):
+            self.inbox.capture("Changed synthetic intent.", source_id="stable")
+        self.assertEqual(1, len(self.store.read_all()))
 
 
 if __name__ == "__main__":

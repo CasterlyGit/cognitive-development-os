@@ -23,6 +23,10 @@ class DuplicateEventError(StoreError):
     pass
 
 
+class SourceConflictError(StoreError):
+    pass
+
+
 class AppendOnlyEventStore:
     """A single-file JSONL ledger with process-safe, fsynced appends."""
 
@@ -121,8 +125,32 @@ class IntentInbox:
     ) -> SourceRecord:
         if not raw_text.strip():
             raise ValueError("raw_text must contain non-whitespace content")
+        resolved_source_id = source_id or "src_%s" % uuid4().hex
+        existing_events = [
+            event
+            for event in self.store.events_for(resolved_source_id)
+            if event.event_type == "source.captured"
+        ]
+        if len(existing_events) > 1:
+            raise SourceConflictError(
+                "source %s has duplicate capture history" % resolved_source_id
+            )
+        if existing_events:
+            existing = SourceRecord.from_dict(existing_events[0].payload)
+            expected_hash = hashlib.sha256(raw_text.encode("utf-8")).hexdigest()
+            if (
+                existing.raw_text != raw_text
+                or existing.kind != kind
+                or existing.metadata != dict(metadata or {})
+                or existing.content_sha256 != expected_hash
+            ):
+                raise SourceConflictError(
+                    "source_id %s already identifies different content"
+                    % resolved_source_id
+                )
+            return existing
         record = SourceRecord(
-            source_id=source_id or "src_%s" % uuid4().hex,
+            source_id=resolved_source_id,
             kind=kind,
             raw_text=raw_text,
             captured_at=utc_now(),

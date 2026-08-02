@@ -9,11 +9,11 @@ verified slice. This file is an index, not a second tracker.
 - [#3 — Intent-atom extraction and confirmation lifecycle](https://github.com/CasterlyGit/cognitive-development-os/issues/3)
 - [#6 — Living intent graph](https://github.com/CasterlyGit/cognitive-development-os/issues/6)
 - [#7 — Dry-run PR-plan compiler and execution brief](https://github.com/CasterlyGit/cognitive-development-os/issues/7)
+- [#8 — End-to-end decision packet](https://github.com/CasterlyGit/cognitive-development-os/issues/8)
 
 ## Current sequence
 
-1. [#8 — End-to-end decision packet](https://github.com/CasterlyGit/cognitive-development-os/issues/8)
-2. [#9 — Separate Krish integration proposal](https://github.com/CasterlyGit/cognitive-development-os/issues/9), only after the dry run is robust
+1. [#9 — Separate Krish integration proposal](https://github.com/CasterlyGit/cognitive-development-os/issues/9), documentation only; no live integration
 
 ## Workflow
 

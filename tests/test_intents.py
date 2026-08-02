@@ -54,6 +54,13 @@ class IntentExtractionTests(unittest.TestCase):
         self.assertTrue(gated)
         self.assertTrue(all(atom.state == AtomState.AWAITING_CONFIRMATION for atom in gated))
 
+    def test_atom_ids_are_deterministic_for_same_source(self):
+        repeated = IntentExtractor().extract(self.source)
+        self.assertEqual(
+            [atom.atom_id for atom in self.atoms],
+            [atom.atom_id for atom in repeated],
+        )
+
 
 class IntentLifecycleTests(unittest.TestCase):
     def setUp(self):
