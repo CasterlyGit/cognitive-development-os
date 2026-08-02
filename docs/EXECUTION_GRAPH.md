@@ -12,29 +12,29 @@ GitHub issues and pull requests remain the delivery records.
 | Conservative intent lifecycle and human confirmation | Layer 2 | Accepted actionable atoms |
 | Dependency, conflict, and cluster graph | Layer 3 | Coherent graph cuts |
 | Dry-run PR plan and bounded execution brief | Layer 4 | Reviewable implementation proposals |
+| End-to-end decision packet | PR #13 | One local review interface from source through compiled proposal |
+| Cognitive branch core and immutable plan versions | PR #19 | Branch-aware continuity and explicit promotion |
+| Typed semantic confidence | PR #21 | Deterministic interpretation evidence without authority |
+| Redacted structural lineage export | PR #23 | Public review packets without raw fields or local identifiers |
+| Atomic continuity stream revisions | PR #25 | Race-safe local continuity writes and exact replay |
+| Disabled Krish contract proposal | PR #14 | Reviewable offline boundary with `live_enabled: false` |
 
 ## Gated
 
 | Gate | Depends on | What remains gated |
 | --- | --- | --- |
-| PR #13: end-to-end decision packet | Merged Layers 1–4 | Human review of the first cross-cutting dry-run packet |
-| PR #17: public north-star vision | Merged evidence and truthful claim audit | Human/independent scope review of the governing specification |
-| PR #19 / issue #18: branch continuity core | Merged Layers 1–4; stacked only for the PR #17 document | Read-only child branches, explicit promotion, immutable plan versions |
-| PR #21 / issue #20: typed semantic confidence | Layer 2; stacked on Stage 1A for linear review | Confidence evidence, hedged-action fallback, historical replay compatibility |
-| PR #23 / issue #22: redacted lineage export | Stage 1A and 1B typed state | Structural public review packet with scoped pseudonymous references and no raw fields |
-| PR #25 / issue #24: stream-revision atomicity | Stage 1A continuity aggregate | Local compare-and-append, distinct-writer rejection, exact retry reconciliation |
-| PR #14: disabled Krish contract proposal | PR #13 | Contract review only; no integration authority |
+| Issue #26: conservative private-data policy | Merged Stage 1 lineage/export | Review typed defaults and the truthful legacy-storage migration warning |
 
 ## Next
 
-1. Review the Stage 1 stack in order through the stream-atomicity hardening layer.
-2. Define and test local retention, deletion, and archived-branch search after
-   the human selects those privacy defaults.
-3. Connect branch-aware accepted-plan versions to the decision packet after PR
-   #13's interface is accepted. This must preserve the separate gate rather than
-   importing its unreviewed code here.
-4. Begin the opt-in multi-project intent field only after its reasoning scope is
-   explicitly chosen.
+1. Review the Stage 1E policy/audit slice without treating it as storage
+   enforcement.
+2. Separate private content from immutable structural lineage, default new raw
+   content to session-only, and provide a safe migration plan for legacy events.
+3. Connect branch-aware accepted-plan versions to the accepted decision packet
+   without enabling execution.
+4. Begin the opt-in multi-project intent field with a single-project default,
+   exact project enumeration, and evidence-backed relationship proposals.
 
 ## Deferred or rejected
 

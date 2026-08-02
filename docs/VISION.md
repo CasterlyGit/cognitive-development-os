@@ -47,10 +47,11 @@ local dry-run control-plane slice:
   execution brief.
 
 [PR #13](https://github.com/CasterlyGit/cognitive-development-os/pull/13)
-implements the end-to-end decision packet and remains an open review gate.
+merged the end-to-end decision packet after review and combined verification.
 [PR #14](https://github.com/CasterlyGit/cognitive-development-os/pull/14)
-proposes a versioned Krish handoff contract and remains a separate, stacked
-review gate. Neither PR enables external action.
+merged a versioned offline Krish handoff contract after separate review. Its
+parser fails closed on type confusion, `live_enabled` remains false, and no
+adapter exists. Neither PR enables external action.
 
 The current product makes no network call, starts no background service, does
 not access Krish, does not invoke Codex, and cannot create, push, merge, deploy,
@@ -234,18 +235,18 @@ on the dependency path. **Deferred** means valuable but intentionally later.
 | Exploration/action distinction and human confirmation | **Implemented** | Merged intent lifecycle; system authority cannot confirm actionable intent. |
 | Dependency/conflict/cluster graph | **Implemented** | Merged Layer 3 with cycle rejection and deterministic reconstruction. |
 | Dry-run PR Compiler and bounded Codex brief | **Implemented** | Merged Layer 4; P1 draft-only and no executor invocation. |
-| End-to-end decision packet | **Implemented — review gate** | PR #13 is CI-green and open; it must be reviewed before joining `main`. |
-| Cognitive branch core and immutable plan versions | **Implemented — review gate** | [PR #19](https://github.com/CasterlyGit/cognitive-development-os/pull/19) has read-only children, exact atom/source lineage, human promotion, supersession, stale-state rejection, idempotent replay, restart tests, and a synthetic demo. It is not merged or a live Sidecar. |
-| Semantic extraction with confidence | **Implemented — review gate** | [PR #21](https://github.com/CasterlyGit/cognitive-development-os/pull/21) adds typed deterministic bands/scores/signals, hedged-action fallback to exploration, historical `unassessed` replay, and tests that confidence cannot confirm intent. It has no model/API inference. |
-| Redacted structural lineage export | **Implemented — review gate** | [PR #23](https://github.com/CasterlyGit/cognitive-development-os/pull/23) emits deterministic scope-specific public references after validating exact local lineage; its schema has no raw source, statement, span, metadata, timestamp, content-hash, or local-ID field. |
-| Atomic continuity stream revision | **Implemented — review gate** | [PR #25](https://github.com/CasterlyGit/cognitive-development-os/pull/25) checks the exact projected stream revision under the append lock, rejects distinct concurrent writers without append, and reconciles an exact racing retry to one event. |
-| Local retention, deletion, and archived-search policy | **Planned — decision needed** | Requires human choices for retention duration, deletion semantics, and archived-branch search defaults. |
+| End-to-end decision packet | **Implemented** | Merged PR #13; the combined source-to-packet tree is local, restart-safe, and P1 draft-only. |
+| Cognitive branch core and immutable plan versions | **Implemented** | Merged PR #19 has read-only children, exact lineage, human promotion, supersession, stale-state rejection, idempotent replay, and restart tests. |
+| Semantic extraction with confidence | **Implemented** | Merged PR #21 adds typed deterministic confidence, hedged-action fallback, historical `unassessed` replay, and proof that confidence cannot grant authority. |
+| Redacted structural lineage export | **Implemented** | Merged PR #23 emits scope-specific references after validating local lineage; its schema has no raw source, statement, span, metadata, timestamp, content hash, or local ID. |
+| Atomic continuity stream revision | **Implemented** | Merged PR #25 checks the projected revision under the append lock, rejects distinct racing writers, and reconciles exact retries. |
+| Local retention, deletion, and archived-search policy | **Implemented — review gate** | Issue #26 / Stage 1E provides session-only defaults, bounded opt-in persistence, exact archived scope, reversible quarantine planning, and a privacy-safe audit. It does not yet enforce storage migration or deletion. |
 | Multi-project intent field and relationship proposals | **Planned** | Requires evidence/confidence on every proposed edge and human conflict resolution. |
 | Evidence-driven worker routing and Paver runtime rail | **Planned** | Requires mocked dispatch, receipts, telemetry, and proof that routing cannot expand permission. |
 | Outcome verifier, review, observability, and lesson memory | **Planned** | Requires normalized attempts, independent evidence, retry caps, quarantine, timelines, and human-promoted lessons. |
 | Human-facing Control Room and Sidecar AI | **Planned** | Requires branch semantics and decision-packet usability evidence first. |
 | Effect-scoped approval receipts and adapter simulator | **Planned** | Must reject wrong target/digest/scope, expiry, revocation, replay, and stale state without network access. |
-| Krish handoff contract | **Deferred — review gate** | PR #14 is CI-green, open, stacked on #13, and explicitly leaves live integration disabled. |
+| Krish handoff contract | **Implemented offline; integration deferred** | Merged PR #14 validates a P1 draft proposal and explicitly leaves live integration disabled with no adapter. |
 | Live Krish, GitHub, deployment, or Codex adapters | **Deferred** | Require the internal verification and permission stages plus new explicit authorization per capability. |
 | General Graph Architect Workbench | **Deferred** | Revisit after a fixed verified execution/learning loop shows need for graph inspection or editing. |
 | Automatic merge or unattended consequential action | **Rejected** | Merge remains mechanically human-only; exploration never implies authority. |
@@ -253,19 +254,18 @@ on the dependency path. **Deferred** means valuable but intentionally later.
 
 ## Dependency-aware roadmap
 
-### Gate 1 — settle the verified dry-run core
+### Settled gate 1 — verified dry-run core
 
-Review [PR #13](https://github.com/CasterlyGit/cognitive-development-os/pull/13).
-Its CI, synthetic demo, degraded paths, idempotent replay, and no-effect boundary
-must remain green. Human review decides whether the decision packet is coherent
-enough to become the first complete local slice.
+[PR #13](https://github.com/CasterlyGit/cognitive-development-os/pull/13)
+merged after its CI, synthetic demo, degraded paths, idempotent replay, and
+no-effect boundary passed review. It is the accepted first complete local
+decision-packet slice.
 
-### Gate 2 — settle the contract proposal, not an integration
+### Settled gate 2 — contract proposal, not an integration
 
-After Gate 1, retarget or rebase
-[PR #14](https://github.com/CasterlyGit/cognitive-development-os/pull/14).
-Review only its schema, validation, documentation, and architecture decision.
-Acceptance must leave `live_enabled: false`, contain no adapter, and grant no
+[PR #14](https://github.com/CasterlyGit/cognitive-development-os/pull/14)
+merged after separate schema, validation, documentation, and architecture
+review. It leaves `live_enabled: false`, contains no adapter, and grants no
 Krish authority.
 
 ### Stage 1 — intent continuity and cognitive branches
@@ -284,29 +284,34 @@ fixture, no external effects, and a reviewable decision packet showing a branch
 that changes the proposed plan without rewriting its history.
 
 [PR #19](https://github.com/CasterlyGit/cognitive-development-os/pull/19)
-implements the first thin slice from [issue #18](https://github.com/CasterlyGit/cognitive-development-os/issues/18): the local branch, promotion, immutable
-plan-version, stale-state, replay, and restart core on a review branch. The
-private-source lifecycle policy remains separate next work, so Stage 1 as a
-whole is not yet complete.
+merged the first thin slice from [issue #18](https://github.com/CasterlyGit/cognitive-development-os/issues/18): the local branch, promotion, immutable
+plan-version, stale-state, replay, and restart core.
 
 [PR #21](https://github.com/CasterlyGit/cognitive-development-os/pull/21)
-implements the next independently reviewable slice from [issue #20](https://github.com/CasterlyGit/cognitive-development-os/issues/20): typed confidence
+merged the next independently reviewable slice from [issue #20](https://github.com/CasterlyGit/cognitive-development-os/issues/20): typed confidence
 for the local rules extractor, safe fallback for hedged action, and explicit
 proof that confidence is metadata rather than authority. Learned/model-based
 semantic inference remains outside this slice.
 
 [PR #23](https://github.com/CasterlyGit/cognitive-development-os/pull/23)
-implements the safe export portion of the privacy boundary from [issue #22](https://github.com/CasterlyGit/cognitive-development-os/issues/22): it
+merged the safe export portion of the privacy boundary from [issue #22](https://github.com/CasterlyGit/cognitive-development-os/issues/22): it
 validates exact private lineage locally, then emits only structural typed state
-and scope-specific pseudonymous references. Retention, deletion, and archived
-search remain undecided, so Stage 1 as a whole remains a review-gated partial
-implementation.
+and scope-specific pseudonymous references.
 
 [PR #25](https://github.com/CasterlyGit/cognitive-development-os/pull/25)
-hardens the same local aggregate against validation/append races from [issue #24](https://github.com/CasterlyGit/cognitive-development-os/issues/24). Each
+merged hardening for the same local aggregate against validation/append races
+from [issue #24](https://github.com/CasterlyGit/cognitive-development-os/issues/24). Each
 command carries the stream revision observed with its projection into the locked
 append; a distinct concurrent change becomes a retryable stale-state result,
 while the same operation racing itself reconciles to the existing event.
+
+[Issue #26](https://github.com/CasterlyGit/cognitive-development-os/issues/26)
+implements the conservative policy/audit slice: session-only raw retention by
+default, bounded and approved local persistence, exact archived search,
+reversible exact-source quarantine planning, and single-project reasoning. Its
+legacy audit truthfully shows that the current ledger still embeds private
+fields, so Stage 1 storage enforcement remains incomplete until content is
+separated from structural lineage.
 
 ### Stage 2 — the multi-project intent field
 
@@ -353,10 +358,6 @@ need from the verified fixed graph, not speculation.
 
 The roadmap intentionally leaves these choices to a person:
 
-- whether PR #13's decision packet is the right review interface;
-- whether PR #14's contract is sufficient as a proposal;
-- private-source retention and archived-branch search defaults;
-- cross-project reasoning scope;
 - routing cost/risk thresholds and retry caps;
 - the minimum evidence required for each risk class;
 - plugin versus approved local service for Krish; and

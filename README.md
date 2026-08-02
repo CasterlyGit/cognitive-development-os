@@ -22,6 +22,7 @@ python3 -m examples.stage1a_intent_continuity_demo
 python3 -m examples.stage1b_semantic_confidence_demo
 python3 -m examples.stage1c_redacted_lineage_demo
 python3 -m examples.stage1d_stream_revision_demo
+python3 -m examples.stage1e_private_data_policy_demo
 ```
 
 Python 3.9 or newer is required. The project has no runtime dependency outside
@@ -56,17 +57,23 @@ Stage 1 adds local cognitive branches and immutable accepted-plan versions:
 children are read-only, and only explicit human promotion can create a
 superseding parent version.
 
-Typed, deterministic semantic-confidence
-metadata. Hedged action falls back to exploration, historical atoms replay as
+Typed, deterministic semantic-confidence metadata is preserved with each atom.
+Hedged action falls back to exploration, historical atoms replay as
 explicitly unassessed, and confidence never confirms intent or grants authority.
 
-Branch and plan lineage can be rendered as a structural
-public packet with scope-specific pseudonymous references. Its schema has no raw
-source, statement, span, metadata, timestamp, content-hash, or local-ID field.
+Branch and plan lineage can be rendered as a structural public packet with
+scope-specific pseudonymous references. Its schema has no raw source, statement,
+span, metadata, timestamp, content-hash, or local-ID field.
 
-Every continuity command is tied to the exact stream
-revision it projected, so a distinct concurrent writer fails the pending append
+Every continuity command is tied to the exact stream revision it projected, so
+a distinct concurrent writer fails the pending append
 without poisoning history while an exact racing retry reconciles idempotently.
+
+The Stage 1E review branch adds typed conservative data-policy defaults:
+session-only raw source, exact-scope structural search, single-project reasoning,
+and effect-free reversible quarantine plans. Its audit deliberately reports that
+the legacy ledger still embeds private fields; no deletion or retention
+enforcement is claimed yet.
 
 ## License
 

@@ -1,6 +1,6 @@
 # ADR 0003: Cognitive branch continuity and plan supersession
 
-- Status: proposed
+- Status: accepted
 - Date: 2026-08-02
 
 ## Context
