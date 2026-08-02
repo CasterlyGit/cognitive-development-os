@@ -1,0 +1,57 @@
+{
+  "continuity_id": "continuity_demo_stage1g",
+  "graph_id": "graph_demo_stage1g",
+  "root_branch_id": "accepted_path",
+  "atoms": [
+    {
+      "atom_id": "foundation",
+      "source_id": "src_demo_foundation",
+      "kind": "actionable",
+      "state": "confirmed",
+      "statement": "Build the local accepted-plan bridge."
+    },
+    {
+      "atom_id": "old_path",
+      "source_id": "src_demo_old_path",
+      "kind": "actionable",
+      "state": "confirmed",
+      "statement": "Compile without binding a plan version."
+    },
+    {
+      "atom_id": "constraint",
+      "source_id": "src_demo_constraint",
+      "kind": "constraint",
+      "state": "proposed",
+      "statement": "Do not execute the generated brief."
+    },
+    {
+      "atom_id": "bound_packet",
+      "source_id": "src_demo_bound_packet",
+      "kind": "actionable",
+      "state": "confirmed",
+      "statement": "Bind the exact accepted plan to the decision packet."
+    }
+  ],
+  "dependencies": [
+    ["old_path", "foundation"],
+    ["bound_packet", "foundation"]
+  ],
+  "root_atom_ids": ["foundation", "old_path", "constraint"],
+  "child": {
+    "branch_id": "binding_question",
+    "anchor_atom_id": "old_path",
+    "inherited_atom_ids": ["old_path", "constraint"],
+    "proposal_atom_id": "bound_packet",
+    "replace_atom_ids": ["old_path"]
+  },
+  "compile": {
+    "title": "Add the accepted-plan decision-packet bridge",
+    "outcome": "Bind one immutable accepted plan version to a local draft packet.",
+    "target_atom_ids": ["bound_packet"],
+    "owned_paths": ["cognitive_os/accepted_plan_packet.py"],
+    "acceptance_criteria": ["The packet binds the exact current accepted plan."],
+    "verification_steps": ["python3 -m unittest -v tests.test_accepted_plan_packet"],
+    "explicit_exclusions": ["Do not execute the brief."],
+    "risk": "low"
+  }
+}

@@ -36,6 +36,7 @@ lineage](docs/implementation/STAGE_1C_REDACTED_LINEAGE_EXPORT.md), and
 [stream-revision](docs/implementation/STAGE_1D_STREAM_REVISION_ATOMICITY.md)
 layers, plus the [private-data policy](docs/implementation/STAGE_1E_PRIVATE_DATA_POLICY.md)
 and review-gated [session-private lineage](docs/implementation/STAGE_1F_SESSION_PRIVATE_LINEAGE.md).
+The next review gate is the [accepted-plan packet bridge](docs/implementation/STAGE_1G_ACCEPTED_PLAN_PACKET.md).
 Those reports link each implemented claim to focused tests and a
 synthetic demonstration.
 4. Read the [architecture index](docs/ARCHITECTURE.md), [decision records](docs/decisions/README.md), and [roadmap](docs/ROADMAP.md) for the current
@@ -50,6 +51,7 @@ python3 -m examples.stage1c_redacted_lineage_demo
 python3 -m examples.stage1d_stream_revision_demo
 python3 -m examples.stage1e_private_data_policy_demo
 python3 -m examples.stage1f_session_private_lineage_demo
+python3 -m examples.stage1g_accepted_plan_packet_demo
 ```
 
 ## Status
@@ -91,10 +93,14 @@ and effect-free reversible quarantine plans. Its audit deliberately reports that
 the legacy ledger still embeds private fields; no deletion or retention
 enforcement is claimed yet.
 
-The Stage 1F review branch enforces session-only storage for new v2 capture and
+Stage 1F enforces session-only storage for new v2 capture and
 extraction: raw source, statements, and metadata are absent from immutable
 events, while digest-bound structure survives restart. Clearing the vault drops
 process references but does not claim secure-memory erasure.
+
+The Stage 1G review branch binds the exact current accepted plan version and a
+scoped graph digest to one deterministic draft decision packet. Compilation is
+pure and local; it writes no event and grants no execution permission.
 
 ## License
 
