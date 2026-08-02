@@ -7,6 +7,7 @@ may supersede one while preserving its provenance.
 | ADR | Status | Decision |
 |---|---|---|
 | [0001](0001-dry-run-control-plane-boundary.md) | accepted | Keep the initial control plane local and dry-run only |
+| [0003](0003-cognitive-branch-continuity.md) | proposed | Isolate child branches and supersede accepted plans only through explicit promotion |
 
 ## Record template
 

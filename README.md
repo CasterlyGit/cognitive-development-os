@@ -13,6 +13,7 @@ and cannot merge or deploy anything.
 
 ```bash
 python3 -m unittest discover -v
+python3 -m examples.stage1a_intent_continuity_demo
 ```
 
 Implementation proceeds as independently reviewable layers. Reports and proof
@@ -28,8 +29,11 @@ Implemented layers include a typed, append-only Intent Inbox/event ledger, a
 conservative intent-atom lifecycle with explicit human confirmation boundaries,
 and a restart-safe dependency/conflict/cluster intent graph. A dry-run PR
 Compiler now emits dependency-closed plans and bounded Codex execution briefs;
-the end-to-end decision packet is the next layer. None of these artifacts
-authorize writes to other repositories or services.
+the end-to-end decision packet remains a separate review gate. The Stage 1A
+review branch adds local cognitive branches and immutable accepted-plan versions:
+children are read-only, and only explicit human promotion can create a
+superseding parent version. None of these artifacts authorize writes to other
+repositories or services.
 
 ## License
 
