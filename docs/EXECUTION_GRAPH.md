@@ -21,24 +21,24 @@ GitHub issues and pull requests remain the delivery records.
 | Conservative private-data policy | PR #28 | Private-by-default typed policy and privacy-safe legacy audit |
 | Session-private content boundary | PR #31 | New v2 inputs persist structural lineage without raw content |
 | Accepted-plan packet bridge | PR #33 | Exact current plan and scoped graph bind one draft-only packet |
+| Exact legacy migration planning | PR #35 | Redacted non-executing inventory and prerequisite plan |
 
-## Gated
+## Active review
 
-| Gate | Depends on | What remains gated |
+| Slice | Depends on | Review boundary |
 | --- | --- | --- |
-| Issue #34: exact legacy migration plan | Merged Stage 1E–1F privacy boundary | Review redacted inventory and prerequisites without authorizing mutation |
+| Issue #36: Project Decision Loop MVP | Merged Stage 1 foundations | Review the two-project local loop, simulated routing, evidence timeline, and privacy audit without treating it as live execution authority |
 
 ## Next
 
-1. Review the Stage 1H legacy migration plan without treating it as rewrite,
-   quarantine, deletion, or migration authority.
-2. Begin the opt-in multi-project intent field with a single-project default,
-   exact project enumeration, and evidence-backed relationship proposals.
+1. Review the Project Decision Loop MVP as one fixed local-only product slice.
+2. Stop at the MVP boundary; the best next investment is an independent local
+   evidence evaluator for this same fixed loop.
 
 ## Deferred or rejected
 
-Worker dispatch, the Paver runtime rail, outcome learning, Control Room/Sidecar
-UI, effect simulators, and live adapters remain downstream of the internal
-branch and verification path. Krish access, live GitHub/deployment/Codex effects,
-the general Graph Architect Workbench, automatic merge, and ambient chat access
+A general multi-project field, live worker dispatch, the Paver runtime rail,
+outcome learning, Control Room/Sidecar UI, effect simulators, and live adapters
+remain outside the MVP. Krish access, live GitHub/deployment/Codex effects, the
+general Graph Architect Workbench, automatic merge, and ambient chat access
 remain deferred or rejected exactly as recorded in `VISION.md`.

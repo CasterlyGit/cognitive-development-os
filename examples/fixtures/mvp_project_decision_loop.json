@@ -1,0 +1,157 @@
+{
+  "schema_version": "1.0",
+  "loop_id": "synthetic_atlas_beacon",
+  "projects": [
+    {
+      "project_id": "atlas",
+      "label": "Atlas data contract",
+      "owned_paths": ["projects/atlas"]
+    },
+    {
+      "project_id": "beacon",
+      "label": "Beacon decision view",
+      "owned_paths": ["projects/beacon"]
+    }
+  ],
+  "intents": [
+    {
+      "project_id": "atlas",
+      "atom": {
+        "atom_id": "atlas_schema",
+        "source_id": "synthetic_atlas_note",
+        "kind": "actionable",
+        "statement": "Define the stable local decision-summary schema.",
+        "source_start": 0,
+        "source_end": 48,
+        "state": "confirmed",
+        "requires_human_confirmation": true,
+        "extraction_method": "synthetic_fixture",
+        "semantic_confidence": {
+          "band": "high",
+          "score_millis": 900,
+          "signals": ["explicit_action"]
+        }
+      }
+    },
+    {
+      "project_id": "atlas",
+      "atom": {
+        "atom_id": "atlas_contract",
+        "source_id": "synthetic_atlas_note",
+        "kind": "actionable",
+        "statement": "Publish the schema as a local draft contract.",
+        "source_start": 49,
+        "source_end": 94,
+        "state": "confirmed",
+        "requires_human_confirmation": true,
+        "extraction_method": "synthetic_fixture",
+        "semantic_confidence": {
+          "band": "high",
+          "score_millis": 900,
+          "signals": ["explicit_action"]
+        }
+      }
+    },
+    {
+      "project_id": "beacon",
+      "atom": {
+        "atom_id": "beacon_summary",
+        "source_id": "synthetic_beacon_note",
+        "kind": "actionable",
+        "statement": "Render the decision summary from the shared local contract.",
+        "source_start": 0,
+        "source_end": 59,
+        "state": "confirmed",
+        "requires_human_confirmation": true,
+        "extraction_method": "synthetic_fixture",
+        "semantic_confidence": {
+          "band": "high",
+          "score_millis": 900,
+          "signals": ["explicit_action"]
+        }
+      }
+    },
+    {
+      "project_id": "beacon",
+      "atom": {
+        "atom_id": "beacon_animation_idea",
+        "source_id": "synthetic_beacon_note",
+        "kind": "exploration",
+        "statement": "Maybe animate worker activity later.",
+        "source_start": 60,
+        "source_end": 96,
+        "state": "proposed",
+        "requires_human_confirmation": false,
+        "extraction_method": "synthetic_fixture",
+        "semantic_confidence": {
+          "band": "low",
+          "score_millis": 250,
+          "signals": ["hedged_language"]
+        }
+      }
+    }
+  ],
+  "local_dependencies": [
+    ["atlas_contract", "atlas_schema"]
+  ],
+  "relationship_proposal": {
+    "kind": "depends_on",
+    "source_atom_id": "beacon_summary",
+    "target_atom_id": "atlas_contract",
+    "evidence": [
+      {
+        "source_id": "synthetic_atlas_note",
+        "rationale": "The Atlas note explicitly defines the local draft contract."
+      },
+      {
+        "source_id": "synthetic_beacon_note",
+        "rationale": "The Beacon note explicitly requests the shared local contract."
+      }
+    ],
+    "confidence": {
+      "band": "medium",
+      "score_millis": 720,
+      "signals": ["cross_project_language", "shared_contract_reference"]
+    }
+  },
+  "compile": {
+    "title": "Connect Beacon to the Atlas decision contract",
+    "outcome": "A local Beacon decision summary is coherently planned against the Atlas draft contract.",
+    "target_atom_ids": ["beacon_summary"],
+    "owned_paths": ["projects/atlas", "projects/beacon"],
+    "acceptance_criteria": [
+      "The graph cut includes the Atlas schema and contract dependencies.",
+      "The optional animation idea remains excluded.",
+      "The route remains draft-only and local."
+    ],
+    "verification_steps": [
+      "Inspect the dependency closure.",
+      "Confirm the simulated receipt preserves scope and permission."
+    ],
+    "explicit_exclusions": [
+      "Do not implement animation, networking, deployment, or external adapters."
+    ],
+    "risk": "medium",
+    "max_atoms": 4
+  },
+  "route_simulation": {
+    "paver_capability_match": false
+  },
+  "evidence": [
+    {
+      "evidence_id": "dependency_closure",
+      "description": "The synthetic graph cut contains Beacon summary, Atlas contract, and Atlas schema.",
+      "passed": true
+    },
+    {
+      "evidence_id": "scope_preserved",
+      "description": "The test-double receipt contains only the two declared project paths.",
+      "passed": true
+    },
+    {
+      "evidence_id": "permission_preserved",
+      "description": "The test-double receipt remains P1 draft-only with no external effect.",
+      "passed": true
+    }
+  ]
+}
