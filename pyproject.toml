@@ -10,6 +10,10 @@ requires-python = ">=3.9"
 
 [project.scripts]
 cognitive-os = "cognitive_os.cli:main"
+cognitive-os-ui = "cognitive_os.web_mvp:main"
 
 [tool.setuptools.packages.find]
 include = ["cognitive_os*"]
+
+[tool.setuptools.package-data]
+cognitive_os = ["web_assets/*"]

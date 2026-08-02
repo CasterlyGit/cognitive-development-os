@@ -9,6 +9,36 @@ The current implementation is an early dry-run prototype. It performs no
 network calls, starts no background services, does not integrate with Krish,
 and cannot merge or deploy anything.
 
+## Setup
+
+Use Python 3.9 or newer. The runtime has no dependency outside the standard
+library:
+
+```bash
+python3 -m pip install -e .
+```
+
+## Launch the Project Decision Loop
+
+The smallest end-to-end product surface is a guided local app for exactly two
+explicitly opted-in projects. A first-time user sees what the system noticed,
+reviews the source evidence, and approves or rejects one proposed relationship.
+That click performs the real local backend transition and persists the plan,
+verification evidence, and decision timeline. Only downstream Paver/Codex
+execution is simulated; no external effect is authorized.
+
+```bash
+mkdir -p data && cognitive-os-ui --store data/project-decision-loop.jsonl --open
+```
+
+The app binds only to `127.0.0.1`, loads the committed synthetic Atlas/Beacon
+fixture, reads no ambient project data, and uses no external assets or service.
+Reopening with the same store reconstructs the exact persisted outcome.
+
+See the [MVP implementation report](docs/implementation/MVP_PROJECT_DECISION_LOOP.md)
+for the acceptance ledger, rejection demo, privacy audit, known limits, and
+post-MVP roadmap.
+
 ## Evaluation path
 
 1. Run the local verification suite. It requires Python 3.9+ and no runtime
@@ -28,7 +58,8 @@ cognitive-os run \
 python3 -m examples.layer5_end_to_end_demo
 ```
 
-3. Inspect the implementation reports for the [end-to-end decision
+3. Inspect the [Project Decision Loop MVP](docs/implementation/MVP_PROJECT_DECISION_LOOP.md)
+report and the implementation reports for the [end-to-end decision
 packet](docs/implementation/LAYER_5_END_TO_END.md), the [draft-only Krish
 contract](docs/implementation/LAYER_6_KRISH_PROPOSAL.md), and the Stage 1
 [continuity](docs/implementation/STAGE_1A_INTENT_CONTINUITY.md), [confidence](docs/implementation/STAGE_1B_SEMANTIC_CONFIDENCE.md), [redacted
@@ -37,8 +68,8 @@ lineage](docs/implementation/STAGE_1C_REDACTED_LINEAGE_EXPORT.md), and
 layers, plus the [private-data policy](docs/implementation/STAGE_1E_PRIVATE_DATA_POLICY.md),
 [session-private lineage](docs/implementation/STAGE_1F_SESSION_PRIVATE_LINEAGE.md),
 and [accepted-plan packet bridge](docs/implementation/STAGE_1G_ACCEPTED_PLAN_PACKET.md).
-The current review gate is the [exact legacy migration
-plan](docs/implementation/STAGE_1H_LEGACY_MIGRATION_PLAN.md).
+The exact legacy migration plan is documented in the [Stage 1H report](docs/implementation/STAGE_1H_LEGACY_MIGRATION_PLAN.md);
+it remains non-executable even though its review PR has merged.
 Those reports link each implemented claim to focused tests and a
 synthetic demonstration.
 4. Read the [architecture index](docs/ARCHITECTURE.md), [decision records](docs/decisions/README.md), and [roadmap](docs/ROADMAP.md) for the current
@@ -105,7 +136,7 @@ Stage 1G binds the exact current accepted plan version and a
 scoped graph digest to one deterministic draft decision packet. Compilation is
 pure and local; it writes no event and grants no execution permission.
 
-The Stage 1H review branch inventories exact private-bearing legacy events and
+Stage 1H inventories exact private-bearing legacy events and
 derives structural targets without exposing their values. It is explicitly
 non-executable and performs no rewrite, quarantine, deletion, or file mutation.
 

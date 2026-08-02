@@ -16,6 +16,10 @@ conversation -> immutable source -> intent atoms -> intent graph
              -> read-only branch -> explicit promotion -> accepted plan version
              -> coherent graph cut -> dry-run PR plan + execution brief
              -> decision packet -> later, explicitly approved adapters
+
+MVP: exactly two declared project scopes -> source-backed relationship proposal
+   -> exact human decision -> dependency-closed plan -> route test double
+   -> local verification record and decision timeline
 ```
 
 Human confirmation separates exploration from accepted actionable intent.
@@ -39,7 +43,8 @@ message, or mutate another system.
 | Private-data and reasoning defaults | [#26](https://github.com/CasterlyGit/cognitive-development-os/issues/26) | implemented | Policy/audit only; legacy embedded data requires migration |
 | Session-private content and structural lineage | [#30](https://github.com/CasterlyGit/cognitive-development-os/issues/30) | implemented | v2 path only; legacy data is unchanged |
 | Accepted-plan-bound decision packet | [#32](https://github.com/CasterlyGit/cognitive-development-os/issues/32) | implemented | Pure local compile; no event writes or execution |
-| Exact legacy migration planning | [#34](https://github.com/CasterlyGit/cognitive-development-os/issues/34) | implemented — review gate | Redacted plan only; mutation prerequisites remain gated |
+| Exact legacy migration planning | [#34](https://github.com/CasterlyGit/cognitive-development-os/issues/34) | implemented | Redacted plan only; mutation prerequisites remain gated |
+| Project Decision Loop product MVP | [#36](https://github.com/CasterlyGit/cognitive-development-os/issues/36) / [#38](https://github.com/CasterlyGit/cognitive-development-os/issues/38) | implemented — review gate | Guided localhost UI; real JSONL decision transition; Paver/Codex effects simulated only |
 | Krish integration proposal | [#9](https://github.com/CasterlyGit/cognitive-development-os/issues/9) | contract implemented; integration deferred | Offline contract only; live path disabled |
 
 The lean [capability execution graph](EXECUTION_GRAPH.md) separates merged,
