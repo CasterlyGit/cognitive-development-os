@@ -13,16 +13,25 @@ This page remains the compact index of live GitHub delivery state.
 - [#6 — Living intent graph](https://github.com/CasterlyGit/cognitive-development-os/issues/6)
 - [#7 — Dry-run PR-plan compiler and execution brief](https://github.com/CasterlyGit/cognitive-development-os/issues/7)
 - [#8 — End-to-end decision packet](https://github.com/CasterlyGit/cognitive-development-os/issues/8)
-- [#26 — Conservative private-data and scope defaults](https://github.com/CasterlyGit/cognitive-development-os/issues/26)
+- [#9 — Disabled Krish contract proposal](https://github.com/CasterlyGit/cognitive-development-os/issues/9)
+- [#16 — North-star vision](https://github.com/CasterlyGit/cognitive-development-os/issues/16)
+- [#18 — Intent continuity and cognitive branch core](https://github.com/CasterlyGit/cognitive-development-os/issues/18)
+- [#20 — Typed semantic confidence](https://github.com/CasterlyGit/cognitive-development-os/issues/20)
+- [#22 — Redacted structural lineage export](https://github.com/CasterlyGit/cognitive-development-os/issues/22)
+- [#24 — Atomic continuity stream revisions](https://github.com/CasterlyGit/cognitive-development-os/issues/24)
 
 ## Open review gates
 
-1. [#9 — Separate Krish integration proposal](https://github.com/CasterlyGit/cognitive-development-os/issues/9), documentation only; no live integration
+1. [#26 — Conservative private-data and reasoning-scope defaults](https://github.com/CasterlyGit/cognitive-development-os/issues/26), policy and audit only; no deletion
 
 ## Next execution path
 
-1. Add the opt-in, project-scoped intent field with evidence-backed relationship proposals.
-2. Connect accepted continuity plan versions to the verified decision packet without enabling execution.
+1. Separate private content from immutable structural lineage so session-only and
+   expiring retention can be enforced without rewriting accepted history.
+2. Connect accepted continuity plan versions to the verified decision packet
+   without enabling execution.
+3. Add the opt-in, project-scoped intent field with evidence-backed relationship
+   proposals after the private storage boundary is proven.
 
 The [capability execution graph](EXECUTION_GRAPH.md) records dependencies and
 the precise boundary between these review gates and later stages.

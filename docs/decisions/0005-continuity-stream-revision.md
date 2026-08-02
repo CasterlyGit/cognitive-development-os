@@ -1,6 +1,6 @@
 # ADR 0005: Atomic continuity stream revision
 
-- Status: proposed
+- Status: accepted
 - Date: 2026-08-02
 
 ## Context
