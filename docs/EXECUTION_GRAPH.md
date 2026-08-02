@@ -12,28 +12,29 @@ GitHub issues and pull requests remain the delivery records.
 | Conservative intent lifecycle and human confirmation | Layer 2 | Accepted actionable atoms |
 | Dependency, conflict, and cluster graph | Layer 3 | Coherent graph cuts |
 | Dry-run PR plan and bounded execution brief | Layer 4 | Reviewable implementation proposals |
+| End-to-end decision packet | PR #13 | One local, restart-safe decision packet |
+| Draft-only Krish contract | PR #14 | Validated contract evidence without an adapter |
+| Local cognitive branches and plan versions | PR #19 | Read-only branching with explicit human promotion |
+| Typed semantic confidence | PR #21 | Safe interpretation metadata and exploration fallback |
+| Redacted lineage export | PR #23 | Structural review packet without raw source |
+| Atomic continuity stream revision | PR #25 | Fail-closed concurrent continuity appends |
 
 ## Gated
 
 | Gate | Depends on | What remains gated |
 | --- | --- | --- |
-| PR #13: end-to-end decision packet | Merged Layers 1–4 | Human review of the first cross-cutting dry-run packet |
-| PR #17: public north-star vision | Merged evidence and truthful claim audit | Human/independent scope review of the governing specification |
-| PR #19 / issue #18: branch continuity core | Merged Layers 1–4; stacked only for the PR #17 document | Read-only child branches, explicit promotion, immutable plan versions |
-| PR #21 / issue #20: typed semantic confidence | Layer 2; stacked on Stage 1A for linear review | Confidence evidence, hedged-action fallback, historical replay compatibility |
-| PR #23 / issue #22: redacted lineage export | Stage 1A and 1B typed state | Structural public review packet with scoped pseudonymous references and no raw fields |
-| PR #25 / issue #24: stream-revision atomicity | Stage 1A continuity aggregate | Local compare-and-append, distinct-writer rejection, exact retry reconciliation |
-| PR #14: disabled Krish contract proposal | PR #13 | Contract review only; no integration authority |
+| Retention, deletion, and archived-search policy | Local source/branch evidence | A human privacy decision before implementation |
+| Cross-project intent field | Defined opt-in scope | Evidence-backed relationship proposals and conflict decisions |
+| Live Krish or other external adapter | Internal verification and new explicit authorization | A separate capability and permission decision |
 
 ## Next
 
-1. Review the Stage 1 stack in order through the stream-atomicity hardening layer.
-2. Define and test local retention, deletion, and archived-branch search after
+1. Define and test local retention, deletion, and archived-branch search after
    the human selects those privacy defaults.
-3. Connect branch-aware accepted-plan versions to the decision packet after PR
-   #13's interface is accepted. This must preserve the separate gate rather than
-   importing its unreviewed code here.
-4. Begin the opt-in multi-project intent field only after its reasoning scope is
+2. Connect branch-aware accepted-plan versions to the decision packet only after
+   a scoped review confirms the desired local interface; this must preserve the
+   no-effect boundary.
+3. Begin the opt-in multi-project intent field only after its reasoning scope is
    explicitly chosen.
 
 ## Deferred or rejected
